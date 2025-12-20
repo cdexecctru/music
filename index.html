@@ -2,49 +2,51 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credos Music</title>
+    <title>Credos Music | Pro</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 120px; overflow-x: hidden; }
-        .header { height: 70px; background: #000; display: flex; align-items: center; padding: 0 20px; position: sticky; top: 0; z-index: 2000; justify-content: space-between; border-bottom: 1px solid #282828; }
-        .header-left { display: flex; align-items: center; min-width: 200px; }
-        .brand-logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #1DB954; }
-        .brand-text { margin-left: 12px; font-weight: 700; font-size: 20px; }
+        body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 110px; overflow-x: hidden; }
+        
+        .header { height: 75px; background: #000; display: flex; align-items: center; padding: 0 20px; position: sticky; top: 0; z-index: 2000; justify-content: space-between; border-bottom: 1px solid #282828; }
+        .header-left { display: flex; align-items: center; min-width: 250px; }
+        .brand-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #1DB954; }
+        .brand-text { margin-left: 15px; font-weight: 700; font-size: 22px; }
         .brand-text span { color: #1DB954; }
-        .search-container { flex: 0 1 450px; position: relative; display: flex; align-items: center; }
-        .search-container i { position: absolute; left: 15px; color: #b3b3b3; }
-        .search-input { width: 100%; background: #242424; border: none; padding: 10px 15px 10px 45px; border-radius: 500px; color: white; outline: none; }
-        
-        .content { padding: 20px 30px; }
-        .section-title { color: #1DB954; font-size: 22px; font-weight: 700; margin: 25px 0 15px; }
-        .album-grid { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
-        .album-card { background: #181818; width: 175px; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; position: relative; }
-        .album-card:hover { background: #282828; transform: translateY(-3px); }
-        .album-card img { width: 100%; border-radius: 6px; aspect-ratio: 1/1; object-fit: cover; }
-        
-        /* EKLEME VE SİLME BUTONLARI */
-        .card-action-btn { position: absolute; top: 20px; right: 20px; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; z-index: 10; transition: 0.2s; }
-        .add-btn { background: #1DB954; color: #000; }
-        .remove-btn { background: #ff4d4d; color: #fff; } /* Kırmızı Silme Butonu */
-        .album-card:hover .card-action-btn { display: flex; }
-        .card-action-btn:hover { transform: scale(1.1); }
 
-        .spotify-player { position: fixed; bottom: 0; width: 100%; height: 95px; background: #000; border-top: 1px solid #282828; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 0 20px; box-sizing: border-box; z-index: 3000; }
-        .now-playing { display: flex; align-items: center; }
-        #playerImg { width: 56px; height: 56px; border-radius: 4px; margin-right: 15px; }
-        .player-controls { display: flex; flex-direction: column; align-items: center; }
-        .control-btns { display: flex; align-items: center; gap: 25px; margin-bottom: 8px; color: #b3b3b3; }
-        .control-btns i { cursor: pointer; font-size: 18px; }
-        .active-mode { color: #1DB954 !important; }
+        /* Kavisli Butonlar (İstediğin Tasarım) */
+        .auth-btns { display: flex; gap: 10px; align-items: center; }
+        .nav-btn { padding: 12px 30px; border-radius: 500px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 14px; }
+        .login-btn { background: #1DB954; color: #000; } /* Yeşil kavisli, siyah yazı */
+        .reg-btn { background: transparent; color: #fff; border: 1px solid #555; }
+        .logout-btn { background: #ff4444; color: #fff; } /* Çıkış butonu kırmızı */
+        .nav-btn:hover { transform: scale(1.05); }
+
+        .search-container { flex: 0 1 450px; position: relative; display: flex; align-items: center; }
+        .search-input { width: 100%; background: #242424; border: none; padding: 12px 15px 12px 45px; border-radius: 500px; color: white; outline: none; }
+        .search-container i { position: absolute; left: 15px; color: #b3b3b3; }
+
+        .content { padding: 30px; }
+        .album-grid { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 50px; }
+        .album-card { background: #121212; width: 180px; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.3s; position: relative; }
+        .album-card:hover { background: #282828; }
+        .album-card img { width: 100%; border-radius: 8px; aspect-ratio: 1/1; object-fit: cover; }
+        
+        .action-btn { position: absolute; top: 20px; right: 20px; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 18px; z-index: 10; background: #1DB954; color: #000; }
+        .album-card:hover .action-btn { display: flex; }
+
+        /* Player Bar */
+        .player-bar { position: fixed; bottom: 0; width: 100%; height: 95px; background: #000; border-top: 1px solid #282828; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 0 20px; box-sizing: border-box; }
+        .controls { display: flex; flex-direction: column; align-items: center; }
+        .btn-group { display: flex; align-items: center; gap: 25px; margin-bottom: 10px; color: #b3b3b3; }
         .play-pause { font-size: 35px !important; color: #fff; }
-        .progress-box { width: 100%; display: flex; align-items: center; gap: 10px; }
-        .progress-bar { flex-grow: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
-        .progress { height: 100%; background: #1DB954; width: 0%; border-radius: 2px; }
-        .player-right { display: flex; justify-content: flex-end; align-items: center; gap: 10px; color: #b3b3b3; }
-        input[type="range"] { accent-color: #1DB954; cursor: pointer; width: 100px; }
+        .active-mode { color: #1DB954 !important; }
+        .progress-box { width: 100%; display: flex; align-items: center; gap: 10px; font-size: 12px; }
+        .bar-bg { flex-grow: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; }
+        .bar-fill { height: 100%; background: #1DB954; width: 0%; border-radius: 2px; }
+        .vol-box { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+        input[type="range"] { accent-color: #1DB954; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -56,56 +58,54 @@
         </div>
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" class="search-input" id="search" placeholder="Ne dinlemek istersin?">
+            <input type="text" class="search-input" id="searchInput" placeholder="Ne dinlemek istersin?">
         </div>
-        <button onclick="localStorage.clear(); location.reload()" style="background:none; border:none; color:#b3b3b3; cursor:pointer;">Çıkış</button>
+        <div class="auth-btns" id="authSection">
+            </div>
     </header>
 
     <div class="content">
-        <h2 class="section-title">Şarkılar</h2>
+        <h2 style="color:#1DB954">Kütüphane</h2>
         <div class="album-grid" id="mainGrid"></div>
 
-        <h2 class="section-title">Senin Playlistin</h2>
+        <h2 style="color:#1DB954">Senin Playlistin</h2>
         <div class="album-grid" id="playlistGrid"></div>
     </div>
 
-    <div class="spotify-player">
-        <div class="now-playing">
-            <img id="playerImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
+    <div class="player-bar">
+        <div style="display:flex; align-items:center;">
+            <img id="pImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" style="width:56px; height:56px; border-radius:4px; margin-right:15px;">
             <div>
-                <h4 id="pTitle" style="margin:0; font-size:14px;">Müzik Seçin</h4>
+                <h4 id="pTitle" style="margin:0; font-size:14px;">Müzik Seç</h4>
                 <p style="margin:0; font-size:11px; color:#b3b3b3;">Credos Music</p>
             </div>
         </div>
-        <div class="player-controls">
-            <div class="control-btns">
-                <i class="fas fa-shuffle" id="shuffleBtn" onclick="toggleShuffle()"></i>
-                <i class="fas fa-step-backward" onclick="prevSong()"></i>
-                <i class="fa-solid fa-circle-play play-pause" id="playBtn" onclick="toggle()"></i>
-                <i class="fas fa-step-forward" onclick="nextSong()"></i>
-                <i class="fas fa-repeat" id="repeatBtn" onclick="toggleRepeat()"></i>
+        <div class="controls">
+            <div class="btn-group">
+                <i class="fas fa-shuffle" id="shuf" onclick="toggleMode('shuf')"></i>
+                <i class="fas fa-step-backward" onclick="prev()"></i>
+                <i class="fa-solid fa-circle-play play-pause" id="playBtn" onclick="togglePlay()"></i>
+                <i class="fas fa-step-forward" onclick="next()"></i>
+                <i class="fas fa-repeat" id="rep" onclick="toggleMode('rep')"></i>
             </div>
             <div class="progress-box">
-                <span class="time" id="curTime" style="font-size:11px">0:00</span>
-                <div class="progress-bar" onclick="seek(event)"><div class="progress" id="bar"></div></div>
-                <span class="time" id="totTime" style="font-size:11px">0:00</span>
+                <span id="cTime">0:00</span>
+                <div class="bar-bg" onclick="seek(event)"><div class="bar-fill" id="bar"></div></div>
+                <span id="tTime">0:00</span>
             </div>
         </div>
-        <div class="player-right">
+        <div class="vol-box">
             <i class="fas fa-volume-up"></i>
-            <input type="range" id="volumeSlider" min="0" max="100" step="1" value="100" oninput="changeVolume()">
-            <span id="volLevel" style="font-size: 11px; min-width: 25px;">100</span>
+            <input type="range" id="vol" min="0" max="100" value="100" oninput="setVol()">
+            <span id="volVal" style="font-size:12px; min-width:30px;">100</span>
         </div>
     </div>
 
     <audio id="audio"></audio>
 
     <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPDYJR4K3krPeBzfdH2Q8AvznPb_MYuLzORVq1Ja3p7FJW_TIEg-cLACn_i2yCgDT2/exec"; // Senin .exec linkin
         const audio = document.getElementById('audio');
-        const playBtn = document.getElementById('playBtn');
-        const mainGrid = document.getElementById('mainGrid');
-        const playlistGrid = document.getElementById('playlistGrid');
-
         const songs = [
             {t: 'AL NACER!', f: 'AL NACER.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/ub85xg80/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20221823.png'},
             {t: 'VAI VAI TRAIR', f: 'VAI VAI TRAIR.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/o91q4cbc/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20222249.png'},
@@ -113,93 +113,86 @@
             {t: 'MONTAGEM TOMADA', f: 'MONTAGEM TOMADA.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/1qbqlz3n/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224338.png'}
         ];
 
-        let myPlaylist = JSON.parse(localStorage.getItem('myPlaylist')) || [];
-        let currentIndex = 0;
-        let isShuffle = false;
-        let isRepeat = false;
+        let currentUser = localStorage.getItem('activeUser');
+        let isShuf = false, isRep = false, curIdx = 0;
 
-        function renderSongs() {
-            mainGrid.innerHTML = '';
-            songs.forEach(s => {
-                mainGrid.innerHTML += `
-                    <div class="album-card" onclick="playM('${s.t}', '${s.f}', '${s.i}')">
-                        <button class="card-action-btn add-btn" onclick="addToPlaylist(event, '${s.t}', '${s.f}', '${s.i}')" title="Ekle">+</button>
-                        <img src="${s.i}">
-                        <h3 style="font-size:14px; margin:10px 0 5px;">${s.t}</h3>
-                    </div>`;
-            });
-            renderPlaylist();
-        }
-
-        function addToPlaylist(e, t, f, i) {
-            e.stopPropagation();
-            if(!myPlaylist.some(s => s.f === f)) {
-                myPlaylist.push({t, f, i});
-                localStorage.setItem('myPlaylist', JSON.stringify(myPlaylist));
-                renderPlaylist();
+        // Sayfa Yüklendiğinde Oturum Kontrolü
+        window.onload = () => {
+            const authSection = document.getElementById('authSection');
+            if (currentUser) {
+                // Giriş yapılmışsa: Hesap Adı + Kırmızı Çıkış Butonu
+                authSection.innerHTML = `
+                    <span style="font-weight:600; font-size:14px; margin-right:10px;">Merhaba, ${currentUser}</span>
+                    <button class="nav-btn logout-btn" onclick="logout()">Çıkış Yap</button>
+                `;
+                fetchPlaylist(); // Veritabanından şarkıları çek
+            } else {
+                // Giriş yapılmamışsa: Yeşil Oturum Aç + Kayıt Ol
+                authSection.innerHTML = `
+                    <button class="nav-btn login-btn" onclick="location.href='login.html'">Oturum Açın</button>
+                    <button class="nav-btn reg-btn" onclick="location.href='register.html'">Kayıt Ol</button>
+                `;
+                document.getElementById('playlistGrid').innerHTML = '<p style="color:#555;">Playlist oluşturmak için giriş yapın.</p>';
             }
+            renderMain();
+        };
+
+        function logout() { localStorage.removeItem('activeUser'); location.reload(); }
+
+        // GitHub Database'e Şarkı Ekleme
+        async function addToPlaylist(title, file, img) {
+            if (!currentUser) return alert("Önce giriş yapmalısınız!");
+            
+            // Google Script'e veriyi gönder
+            await fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({
+                    action: "add_to_playlist",
+                    user: currentUser,
+                    title: title,
+                    file: file,
+                    img: img
+                })
+            });
+            alert("Şarkı playlistine eklendi!");
+            fetchPlaylist(); // Listeyi yenile
         }
 
-        // SİLME FONKSİYONU
-        function removeFromPlaylist(e, f) {
-            e.stopPropagation();
-            myPlaylist = myPlaylist.filter(s => s.f !== f);
-            localStorage.setItem('myPlaylist', JSON.stringify(myPlaylist));
-            renderPlaylist();
-        }
-
-        function renderPlaylist() {
-            playlistGrid.innerHTML = myPlaylist.length ? '' : '<p style="color:#b3b3b3; font-size:13px;">Henüz şarkı eklenmedi.</p>';
-            myPlaylist.forEach(s => {
-                playlistGrid.innerHTML += `
-                    <div class="album-card" onclick="playM('${s.t}', '${s.f}', '${s.i}')">
-                        <button class="card-action-btn remove-btn" onclick="removeFromPlaylist(event, '${s.f}')" title="Listeden Kaldır"><i class="fas fa-trash"></i></button>
-                        <img src="${s.i}">
-                        <h3 style="font-size:14px; margin:10px 0 5px;">${s.t}</h3>
+        function renderMain() {
+            const grid = document.getElementById('mainGrid');
+            songs.forEach(s => {
+                grid.innerHTML += `
+                    <div class="album-card" onclick="playM('${s.t}','${s.f}','${s.i}')">
+                        <button class="action-btn" onclick="event.stopPropagation(); addToPlaylist('${s.t}','${s.f}','${s.i}')">+</button>
+                        <img src="${s.i}"><h3>${s.t}</h3>
                     </div>`;
             });
         }
 
-        // Müzik kontrol fonksiyonları (Öncekiyle aynı)
+        // Müzik Kontrolleri
         function playM(t, f, i) {
-            currentIndex = songs.findIndex(s => s.f === f);
+            curIdx = songs.findIndex(s => s.f === f);
             audio.src = f; audio.play();
             document.getElementById('pTitle').innerText = t;
-            document.getElementById('playerImg').src = i;
-            playBtn.className = "fa-solid fa-circle-pause play-pause";
+            document.getElementById('pImg').src = i;
+            document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause";
         }
-        function toggle() {
-            if(!audio.src) return;
-            audio.paused ? (audio.play(), playBtn.className="fa-solid fa-circle-pause play-pause") : (audio.pause(), playBtn.className="fa-solid fa-circle-play play-pause");
-        }
-        function changeVolume() {
-            let val = document.getElementById('volumeSlider').value;
-            audio.volume = val / 100;
-            document.getElementById('volLevel').innerText = val;
-        }
-        function nextSong() {
-            currentIndex = isShuffle ? Math.floor(Math.random()*songs.length) : (currentIndex+1)%songs.length;
-            playM(songs[currentIndex].t, songs[currentIndex].f, songs[currentIndex].i);
-        }
-        function prevSong() {
-            currentIndex = (currentIndex-1+songs.length)%songs.length;
-            playM(songs[currentIndex].t, songs[currentIndex].f, songs[currentIndex].i);
-        }
-        function toggleShuffle() { isShuffle = !isShuffle; document.getElementById('shuffleBtn').classList.toggle('active-mode'); }
-        function toggleRepeat() { isRepeat = !isRepeat; document.getElementById('repeatBtn').classList.toggle('active-mode'); }
+        function togglePlay() { audio.paused ? (audio.play(), document.getElementById('playBtn').className="fa-solid fa-circle-pause play-pause") : (audio.pause(), document.getElementById('playBtn').className="fa-solid fa-circle-play play-pause"); }
+        function setVol() { audio.volume = document.getElementById('vol').value / 100; document.getElementById('volVal').innerText = document.getElementById('vol').value; }
+        function next() { curIdx = isShuf ? Math.floor(Math.random()*songs.length) : (curIdx+1)%songs.length; playM(songs[curIdx].t, songs[curIdx].f, songs[curIdx].i); }
+        function prev() { curIdx = (curIdx-1+songs.length)%songs.length; playM(songs[curIdx].t, songs[curIdx].f, songs[curIdx].i); }
+        function toggleMode(type) { if(type==='shuf'){isShuf=!isShuf; document.getElementById('shuf').classList.toggle('active-mode');} else {isRep=!isRep; document.getElementById('rep').classList.toggle('active-mode');}}
+
         audio.ontimeupdate = () => {
             if(audio.duration) {
-                const pct = (audio.currentTime / audio.duration) * 100;
-                document.getElementById('bar').style.width = pct + "%";
-                document.getElementById('curTime').innerText = fmtTime(audio.currentTime);
-                document.getElementById('totTime').innerText = fmtTime(audio.duration);
+                document.getElementById('bar').style.width = (audio.currentTime/audio.duration)*100 + "%";
+                document.getElementById('cTime').innerText = fmt(audio.currentTime);
+                document.getElementById('tTime').innerText = fmt(audio.duration);
             }
         };
+        function fmt(s) { let m=Math.floor(s/60), r=Math.floor(s%60); return m+":"+(r<10?"0"+r:r); }
         function seek(e) { audio.currentTime = (e.offsetX / e.currentTarget.clientWidth) * audio.duration; }
-        function fmtTime(s) { let m=Math.floor(s/60), rs=Math.floor(s%60); return m+":"+(rs<10?"0"+rs:rs); }
-        audio.onended = () => isRepeat ? audio.play() : nextSong();
-
-        renderSongs();
     </script>
 </body>
 </html>
