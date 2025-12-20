@@ -8,3 +8,6 @@ password = Emir9163cd!
 user = 1331
 username = 1331
 password = 1331
+user = CREDOS
+username = CREDOS
+password = Emir9163cd!
