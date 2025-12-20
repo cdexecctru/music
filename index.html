@@ -8,40 +8,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Önceki CSS ile aynı, sadece logo kısmını genişlettim */
-        body { background-color: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
-        
+        body { background-color: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 120px; overflow-x: hidden; }
         .header { height: 70px; background: #000; display: flex; align-items: center; padding: 0 20px; position: sticky; top: 0; z-index: 2000; justify-content: space-between; border-bottom: 1px solid #282828; }
-        .header-left { display: flex; align-items: center; min-width: 200px; } /* Genişlik artırıldı */
+        .header-left { display: flex; align-items: center; min-width: 200px; }
         .brand-logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #1DB954; }
-        .brand-text { margin-left: 12px; font-weight: 700; font-size: 20px; letter-spacing: -0.5px; }
-        .brand-text span { color: #1DB954; } /* Music yazısı yeşil olsun diye */
-
+        .brand-text { margin-left: 12px; font-weight: 700; font-size: 20px; }
+        .brand-text span { color: #1DB954; }
         .search-container { flex: 0 1 450px; position: relative; display: flex; align-items: center; }
         .search-container i { position: absolute; left: 15px; color: #b3b3b3; }
         .search-input { width: 100%; background: #242424; border: none; padding: 10px 15px 10px 45px; border-radius: 500px; color: white; outline: none; }
-
+        
         .content { padding: 20px 30px; }
         .section-title { color: #1DB954; font-size: 22px; font-weight: 700; margin: 25px 0 15px; }
-        .album-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+        .album-grid { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
         .album-card { background: #181818; width: 175px; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; position: relative; }
         .album-card:hover { background: #282828; transform: translateY(-3px); }
         .album-card img { width: 100%; border-radius: 6px; aspect-ratio: 1/1; object-fit: cover; }
         
-        /* PLAYER BAR */
-        .spotify-player { position: fixed; bottom: 0; width: 100%; height: 95px; background: #000; border-top: 1px solid #282828; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 0 20px; box-sizing: border-box; }
+        /* EKLEME VE SİLME BUTONLARI */
+        .card-action-btn { position: absolute; top: 20px; right: 20px; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; z-index: 10; transition: 0.2s; }
+        .add-btn { background: #1DB954; color: #000; }
+        .remove-btn { background: #ff4d4d; color: #fff; } /* Kırmızı Silme Butonu */
+        .album-card:hover .card-action-btn { display: flex; }
+        .card-action-btn:hover { transform: scale(1.1); }
+
+        .spotify-player { position: fixed; bottom: 0; width: 100%; height: 95px; background: #000; border-top: 1px solid #282828; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 0 20px; box-sizing: border-box; z-index: 3000; }
         .now-playing { display: flex; align-items: center; }
-        #playerImg { width: 56px; height: 56px; border-radius: 4px; margin-right: 15px; flex-shrink: 0; }
-        .player-controls { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        #playerImg { width: 56px; height: 56px; border-radius: 4px; margin-right: 15px; }
+        .player-controls { display: flex; flex-direction: column; align-items: center; }
         .control-btns { display: flex; align-items: center; gap: 25px; margin-bottom: 8px; color: #b3b3b3; }
         .control-btns i { cursor: pointer; font-size: 18px; }
         .active-mode { color: #1DB954 !important; }
         .play-pause { font-size: 35px !important; color: #fff; }
         .progress-box { width: 100%; display: flex; align-items: center; gap: 10px; }
-        .time { font-size: 11px; color: #b3b3b3; min-width: 35px; }
         .progress-bar { flex-grow: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
         .progress { height: 100%; background: #1DB954; width: 0%; border-radius: 2px; }
-        
         .player-right { display: flex; justify-content: flex-end; align-items: center; gap: 10px; color: #b3b3b3; }
         input[type="range"] { accent-color: #1DB954; cursor: pointer; width: 100px; }
     </style>
@@ -55,15 +56,17 @@
         </div>
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" class="search-input" id="search" placeholder="Ne dinlemek istersin?" onkeyup="filter()">
+            <input type="text" class="search-input" id="search" placeholder="Ne dinlemek istersin?">
         </div>
-        <button onclick="localStorage.clear(); location.href='login.html'" style="background:none; border:none; color:#b3b3b3; cursor:pointer; font-weight:600;">Çıkış</button>
+        <button onclick="localStorage.clear(); location.reload()" style="background:none; border:none; color:#b3b3b3; cursor:pointer;">Çıkış</button>
     </header>
 
     <div class="content">
-        <h2 class="section-title">Kütüphane</h2>
-        <div class="album-grid" id="mainGrid">
-            </div>
+        <h2 class="section-title">Şarkılar</h2>
+        <div class="album-grid" id="mainGrid"></div>
+
+        <h2 class="section-title">Senin Playlistin</h2>
+        <div class="album-grid" id="playlistGrid"></div>
     </div>
 
     <div class="spotify-player">
@@ -74,7 +77,6 @@
                 <p style="margin:0; font-size:11px; color:#b3b3b3;">Credos Music</p>
             </div>
         </div>
-
         <div class="player-controls">
             <div class="control-btns">
                 <i class="fas fa-shuffle" id="shuffleBtn" onclick="toggleShuffle()"></i>
@@ -84,14 +86,11 @@
                 <i class="fas fa-repeat" id="repeatBtn" onclick="toggleRepeat()"></i>
             </div>
             <div class="progress-box">
-                <span class="time" id="curTime">0:00</span>
-                <div class="progress-bar" onclick="seek(event)">
-                    <div class="progress" id="bar"></div>
-                </div>
-                <span class="time" id="totTime">0:00</span>
+                <span class="time" id="curTime" style="font-size:11px">0:00</span>
+                <div class="progress-bar" onclick="seek(event)"><div class="progress" id="bar"></div></div>
+                <span class="time" id="totTime" style="font-size:11px">0:00</span>
             </div>
         </div>
-
         <div class="player-right">
             <i class="fas fa-volume-up"></i>
             <input type="range" id="volumeSlider" min="0" max="100" step="1" value="100" oninput="changeVolume()">
@@ -104,8 +103,8 @@
     <script>
         const audio = document.getElementById('audio');
         const playBtn = document.getElementById('playBtn');
-        const volSlider = document.getElementById('volumeSlider');
-        const volLevel = document.getElementById('volLevel');
+        const mainGrid = document.getElementById('mainGrid');
+        const playlistGrid = document.getElementById('playlistGrid');
 
         const songs = [
             {t: 'AL NACER!', f: 'AL NACER.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/ub85xg80/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20221823.png'},
@@ -114,53 +113,80 @@
             {t: 'MONTAGEM TOMADA', f: 'MONTAGEM TOMADA.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/1qbqlz3n/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224338.png'}
         ];
 
+        let myPlaylist = JSON.parse(localStorage.getItem('myPlaylist')) || [];
         let currentIndex = 0;
         let isShuffle = false;
         let isRepeat = false;
 
+        function renderSongs() {
+            mainGrid.innerHTML = '';
+            songs.forEach(s => {
+                mainGrid.innerHTML += `
+                    <div class="album-card" onclick="playM('${s.t}', '${s.f}', '${s.i}')">
+                        <button class="card-action-btn add-btn" onclick="addToPlaylist(event, '${s.t}', '${s.f}', '${s.i}')" title="Ekle">+</button>
+                        <img src="${s.i}">
+                        <h3 style="font-size:14px; margin:10px 0 5px;">${s.t}</h3>
+                    </div>`;
+            });
+            renderPlaylist();
+        }
+
+        function addToPlaylist(e, t, f, i) {
+            e.stopPropagation();
+            if(!myPlaylist.some(s => s.f === f)) {
+                myPlaylist.push({t, f, i});
+                localStorage.setItem('myPlaylist', JSON.stringify(myPlaylist));
+                renderPlaylist();
+            }
+        }
+
+        // SİLME FONKSİYONU
+        function removeFromPlaylist(e, f) {
+            e.stopPropagation();
+            myPlaylist = myPlaylist.filter(s => s.f !== f);
+            localStorage.setItem('myPlaylist', JSON.stringify(myPlaylist));
+            renderPlaylist();
+        }
+
+        function renderPlaylist() {
+            playlistGrid.innerHTML = myPlaylist.length ? '' : '<p style="color:#b3b3b3; font-size:13px;">Henüz şarkı eklenmedi.</p>';
+            myPlaylist.forEach(s => {
+                playlistGrid.innerHTML += `
+                    <div class="album-card" onclick="playM('${s.t}', '${s.f}', '${s.i}')">
+                        <button class="card-action-btn remove-btn" onclick="removeFromPlaylist(event, '${s.f}')" title="Listeden Kaldır"><i class="fas fa-trash"></i></button>
+                        <img src="${s.i}">
+                        <h3 style="font-size:14px; margin:10px 0 5px;">${s.t}</h3>
+                    </div>`;
+            });
+        }
+
+        // Müzik kontrol fonksiyonları (Öncekiyle aynı)
         function playM(t, f, i) {
             currentIndex = songs.findIndex(s => s.f === f);
-            audio.src = f;
-            audio.play();
+            audio.src = f; audio.play();
             document.getElementById('pTitle').innerText = t;
             document.getElementById('playerImg').src = i;
             playBtn.className = "fa-solid fa-circle-pause play-pause";
         }
-
         function toggle() {
             if(!audio.src) return;
-            if(audio.paused) { audio.play(); playBtn.className = "fa-solid fa-circle-pause play-pause"; }
-            else { audio.pause(); playBtn.className = "fa-solid fa-circle-play play-pause"; }
+            audio.paused ? (audio.play(), playBtn.className="fa-solid fa-circle-pause play-pause") : (audio.pause(), playBtn.className="fa-solid fa-circle-play play-pause");
         }
-
-        // SES SİSTEMİ %100 ÜZERİNDEN
         function changeVolume() {
-            let val = volSlider.value;
-            audio.volume = val / 100; // 100'ü 1.0 formatına çevirir
-            volLevel.innerText = val;
+            let val = document.getElementById('volumeSlider').value;
+            audio.volume = val / 100;
+            document.getElementById('volLevel').innerText = val;
         }
-
         function nextSong() {
-            if (isShuffle) currentIndex = Math.floor(Math.random() * songs.length);
-            else currentIndex = (currentIndex + 1) % songs.length;
+            currentIndex = isShuffle ? Math.floor(Math.random()*songs.length) : (currentIndex+1)%songs.length;
             playM(songs[currentIndex].t, songs[currentIndex].f, songs[currentIndex].i);
         }
-
         function prevSong() {
-            currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+            currentIndex = (currentIndex-1+songs.length)%songs.length;
             playM(songs[currentIndex].t, songs[currentIndex].f, songs[currentIndex].i);
         }
-
-        function toggleShuffle() {
-            isShuffle = !isShuffle;
-            document.getElementById('shuffleBtn').classList.toggle('active-mode');
-        }
-
-        function toggleRepeat() {
-            isRepeat = !isRepeat;
-            document.getElementById('repeatBtn').classList.toggle('active-mode');
-        }
-
+        function toggleShuffle() { isShuffle = !isShuffle; document.getElementById('shuffleBtn').classList.toggle('active-mode'); }
+        function toggleRepeat() { isRepeat = !isRepeat; document.getElementById('repeatBtn').classList.toggle('active-mode'); }
         audio.ontimeupdate = () => {
             if(audio.duration) {
                 const pct = (audio.currentTime / audio.duration) * 100;
@@ -169,15 +195,11 @@
                 document.getElementById('totTime').innerText = fmtTime(audio.duration);
             }
         };
-
         function seek(e) { audio.currentTime = (e.offsetX / e.currentTarget.clientWidth) * audio.duration; }
-        function fmtTime(s) { let m = Math.floor(s/60); let rs = Math.floor(s%60); return m + ":" + (rs<10 ? "0"+rs : rs); }
+        function fmtTime(s) { let m=Math.floor(s/60), rs=Math.floor(s%60); return m+":"+(rs<10?"0"+rs:rs); }
+        audio.onended = () => isRepeat ? audio.play() : nextSong();
 
-        const grid = document.getElementById('mainGrid');
-        songs.forEach(s => {
-            grid.innerHTML += `<div class="album-card" onclick="playM('${s.t}', '${s.f}', '${s.i}')">
-                <img src="${s.i}"><h3>${s.t}</h3></div>`;
-        });
+        renderSongs();
     </script>
 </body>
 </html>
