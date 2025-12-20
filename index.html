@@ -2,109 +2,96 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Credos Music | Pro</title>
+    <title>Credos Music | Pure</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 110px; overflow-x: hidden; }
         
-        .header { height: 75px; background: #000; display: flex; align-items: center; padding: 0 20px; position: sticky; top: 0; z-index: 2000; justify-content: space-between; border-bottom: 1px solid #282828; }
-        .header-left { display: flex; align-items: center; min-width: 250px; }
-        .brand-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #1DB954; }
-        .brand-text { margin-left: 15px; font-weight: 700; font-size: 22px; }
+        /* HEADER - Sadeleşti */
+        .header { height: 75px; background: #000; display: flex; align-items: center; padding: 0 20px; position: sticky; top: 0; z-index: 2000; border-bottom: 1px solid #282828; }
+        .brand-logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #1DB954; }
+        .brand-text { margin-left: 12px; font-weight: 700; font-size: 22px; letter-spacing: -1px; }
         .brand-text span { color: #1DB954; }
 
-        /* Kavisli Butonlar (İstediğin Tasarım) */
-        .auth-btns { display: flex; gap: 10px; align-items: center; }
-        .nav-btn { padding: 12px 30px; border-radius: 500px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 14px; }
-        .login-btn { background: #1DB954; color: #000; } /* Yeşil kavisli, siyah yazı */
-        .reg-btn { background: transparent; color: #fff; border: 1px solid #555; }
-        .logout-btn { background: #ff4444; color: #fff; } /* Çıkış butonu kırmızı */
-        .nav-btn:hover { transform: scale(1.05); }
-
-        .search-container { flex: 0 1 450px; position: relative; display: flex; align-items: center; }
-        .search-input { width: 100%; background: #242424; border: none; padding: 12px 15px 12px 45px; border-radius: 500px; color: white; outline: none; }
-        .search-container i { position: absolute; left: 15px; color: #b3b3b3; }
-
-        .content { padding: 30px; }
-        .album-grid { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 50px; }
-        .album-card { background: #121212; width: 180px; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.3s; position: relative; }
-        .album-card:hover { background: #282828; }
-        .album-card img { width: 100%; border-radius: 8px; aspect-ratio: 1/1; object-fit: cover; }
+        .content { padding: 30px 40px; }
+        .section-title { color: #fff; font-size: 24px; font-weight: 700; margin-bottom: 25px; }
         
-        .action-btn { position: absolute; top: 20px; right: 20px; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 18px; z-index: 10; background: #1DB954; color: #000; }
-        .album-card:hover .action-btn { display: flex; }
+        /* ALBUM GRID */
+        .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; }
+        .album-card { background: #181818; padding: 16px; border-radius: 8px; cursor: pointer; transition: background 0.3s ease; position: relative; }
+        .album-card:hover { background: #282828; }
+        .album-card img { width: 100%; border-radius: 6px; aspect-ratio: 1/1; object-fit: cover; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+        .album-card h3 { font-size: 16px; margin: 15px 0 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        /* Play Butonu (Hover'da çıkar) */
+        .play-hover { position: absolute; bottom: 85px; right: 25px; width: 48px; height: 48px; background: #1DB954; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(10px); transition: 0.3s; box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
+        .album-card:hover .play-hover { opacity: 1; transform: translateY(0); }
+        .play-hover i { color: #000; font-size: 20px; }
 
-        /* Player Bar */
-        .player-bar { position: fixed; bottom: 0; width: 100%; height: 95px; background: #000; border-top: 1px solid #282828; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 0 20px; box-sizing: border-box; }
+        /* PLAYER BAR - */
+        .player-bar { position: fixed; bottom: 0; width: 100%; height: 95px; background: #000; border-top: 1px solid #282828; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 0 20px; box-sizing: border-box; z-index: 3000; }
         .controls { display: flex; flex-direction: column; align-items: center; }
-        .btn-group { display: flex; align-items: center; gap: 25px; margin-bottom: 10px; color: #b3b3b3; }
-        .play-pause { font-size: 35px !important; color: #fff; }
-        .active-mode { color: #1DB954 !important; }
-        .progress-box { width: 100%; display: flex; align-items: center; gap: 10px; font-size: 12px; }
-        .bar-bg { flex-grow: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; }
+        .btn-group { display: flex; align-items: center; gap: 25px; margin-bottom: 8px; color: #b3b3b3; }
+        .btn-group i { cursor: pointer; font-size: 18px; transition: 0.2s; }
+        .btn-group i:hover { color: #fff; }
+        .active-green { color: #1DB954 !important; }
+        .play-pause { font-size: 38px !important; color: #fff; }
+        .play-pause:hover { transform: scale(1.05); }
+        
+        .progress-box { width: 100%; max-width: 600px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #b3b3b3; }
+        .bar-bg { flex-grow: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
         .bar-fill { height: 100%; background: #1DB954; width: 0%; border-radius: 2px; }
-        .vol-box { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
-        input[type="range"] { accent-color: #1DB954; cursor: pointer; }
+        .bar-bg:hover .bar-fill { background: #1ed760; }
+        
+        .vol-box { display: flex; justify-content: flex-end; align-items: center; gap: 10px; color: #b3b3b3; }
+        input[type="range"] { accent-color: #1DB954; cursor: pointer; width: 100px; height: 4px; }
     </style>
 </head>
 <body>
 
     <header class="header">
-        <div class="header-left">
-            <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" class="brand-logo">
-            <div class="brand-text">Credos <span>Music</span></div>
-        </div>
-        <div class="search-container">
-            <i class="fas fa-search"></i>
-            <input type="text" class="search-input" id="searchInput" placeholder="Ne dinlemek istersin?">
-        </div>
-        <div class="auth-btns" id="authSection">
-            </div>
+        <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" class="brand-logo">
+        <div class="brand-text">Credos <span>Music</span></div>
     </header>
 
     <div class="content">
-        <h2 style="color:#1DB954">Kütüphane</h2>
+        <h2 class="section-title">Hepsine Göz At</h2>
         <div class="album-grid" id="mainGrid"></div>
-
-        <h2 style="color:#1DB954">Senin Playlistin</h2>
-        <div class="album-grid" id="playlistGrid"></div>
     </div>
 
     <div class="player-bar">
         <div style="display:flex; align-items:center;">
-            <img id="pImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" style="width:56px; height:56px; border-radius:4px; margin-right:15px;">
-            <div>
-                <h4 id="pTitle" style="margin:0; font-size:14px;">Müzik Seç</h4>
+            <img id="pImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" style="width:56px; height:56px; border-radius:4px; margin-right:15px; object-fit: cover;">
+            <div style="overflow: hidden;">
+                <h4 id="pTitle" style="margin:0; font-size:14px; white-space: nowrap; text-overflow: ellipsis;">Müzik Seçin</h4>
                 <p style="margin:0; font-size:11px; color:#b3b3b3;">Credos Music</p>
             </div>
         </div>
         <div class="controls">
             <div class="btn-group">
-                <i class="fas fa-shuffle" id="shuf" onclick="toggleMode('shuf')"></i>
-                <i class="fas fa-step-backward" onclick="prev()"></i>
+                <i class="fas fa-shuffle" id="shufBtn" title="Karıştır" onclick="toggleShuf()"></i>
+                <i class="fas fa-step-backward" onclick="prevSong()"></i>
                 <i class="fa-solid fa-circle-play play-pause" id="playBtn" onclick="togglePlay()"></i>
-                <i class="fas fa-step-forward" onclick="next()"></i>
-                <i class="fas fa-repeat" id="rep" onclick="toggleMode('rep')"></i>
+                <i class="fas fa-step-forward" onclick="nextSong()"></i>
+                <i class="fas fa-repeat" id="repBtn" title="Tekrarla" onclick="toggleRep()"></i>
             </div>
             <div class="progress-box">
-                <span id="cTime">0:00</span>
-                <div class="bar-bg" onclick="seek(event)"><div class="bar-fill" id="bar"></div></div>
-                <span id="tTime">0:00</span>
+                <span id="curTime">0:00</span>
+                <div class="bar-bg" onclick="seek(event)"><div class="bar-fill" id="barFill"></div></div>
+                <span id="totTime">0:00</span>
             </div>
         </div>
         <div class="vol-box">
             <i class="fas fa-volume-up"></i>
-            <input type="range" id="vol" min="0" max="100" value="100" oninput="setVol()">
-            <span id="volVal" style="font-size:12px; min-width:30px;">100</span>
+            <input type="range" id="volRange" min="0" max="100" value="100" oninput="changeVol()">
         </div>
     </div>
 
     <audio id="audio"></audio>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPDYJR4K3krPeBzfdH2Q8AvznPb_MYuLzORVq1Ja3p7FJW_TIEg-cLACn_i2yCgDT2/exec"; // Senin .exec linkin
         const audio = document.getElementById('audio');
         const songs = [
             {t: 'AL NACER!', f: 'AL NACER.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/ub85xg80/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20221823.png'},
@@ -113,86 +100,82 @@
             {t: 'MONTAGEM TOMADA', f: 'MONTAGEM TOMADA.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/1qbqlz3n/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224338.png'}
         ];
 
-        let currentUser = localStorage.getItem('activeUser');
-        let isShuf = false, isRep = false, curIdx = 0;
+        let curIdx = 0, isShuf = false, isRep = false;
 
-        // Sayfa Yüklendiğinde Oturum Kontrolü
         window.onload = () => {
-            const authSection = document.getElementById('authSection');
-            if (currentUser) {
-                // Giriş yapılmışsa: Hesap Adı + Kırmızı Çıkış Butonu
-                authSection.innerHTML = `
-                    <span style="font-weight:600; font-size:14px; margin-right:10px;">Merhaba, ${currentUser}</span>
-                    <button class="nav-btn logout-btn" onclick="logout()">Çıkış Yap</button>
-                `;
-                fetchPlaylist(); // Veritabanından şarkıları çek
-            } else {
-                // Giriş yapılmamışsa: Yeşil Oturum Aç + Kayıt Ol
-                authSection.innerHTML = `
-                    <button class="nav-btn login-btn" onclick="location.href='login.html'">Oturum Açın</button>
-                    <button class="nav-btn reg-btn" onclick="location.href='register.html'">Kayıt Ol</button>
-                `;
-                document.getElementById('playlistGrid').innerHTML = '<p style="color:#555;">Playlist oluşturmak için giriş yapın.</p>';
-            }
-            renderMain();
-        };
-
-        function logout() { localStorage.removeItem('activeUser'); location.reload(); }
-
-        // GitHub Database'e Şarkı Ekleme
-        async function addToPlaylist(title, file, img) {
-            if (!currentUser) return alert("Önce giriş yapmalısınız!");
-            
-            // Google Script'e veriyi gönder
-            await fetch(SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify({
-                    action: "add_to_playlist",
-                    user: currentUser,
-                    title: title,
-                    file: file,
-                    img: img
-                })
-            });
-            alert("Şarkı playlistine eklendi!");
-            fetchPlaylist(); // Listeyi yenile
-        }
-
-        function renderMain() {
             const grid = document.getElementById('mainGrid');
-            songs.forEach(s => {
+            songs.forEach((s, idx) => {
                 grid.innerHTML += `
-                    <div class="album-card" onclick="playM('${s.t}','${s.f}','${s.i}')">
-                        <button class="action-btn" onclick="event.stopPropagation(); addToPlaylist('${s.t}','${s.f}','${s.i}')">+</button>
-                        <img src="${s.i}"><h3>${s.t}</h3>
+                    <div class="album-card" onclick="playM(${idx})">
+                        <img src="${s.i}">
+                        <div class="play-hover"><i class="fas fa-play"></i></div>
+                        <h3>${s.t}</h3>
                     </div>`;
             });
-        }
+        };
 
-        // Müzik Kontrolleri
-        function playM(t, f, i) {
-            curIdx = songs.findIndex(s => s.f === f);
-            audio.src = f; audio.play();
-            document.getElementById('pTitle').innerText = t;
-            document.getElementById('pImg').src = i;
+        function playM(idx) {
+            curIdx = idx;
+            const s = songs[curIdx];
+            audio.src = s.f;
+            audio.play();
+            document.getElementById('pTitle').innerText = s.t;
+            document.getElementById('pImg').src = s.i;
             document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause";
         }
-        function togglePlay() { audio.paused ? (audio.play(), document.getElementById('playBtn').className="fa-solid fa-circle-pause play-pause") : (audio.pause(), document.getElementById('playBtn').className="fa-solid fa-circle-play play-pause"); }
-        function setVol() { audio.volume = document.getElementById('vol').value / 100; document.getElementById('volVal').innerText = document.getElementById('vol').value; }
-        function next() { curIdx = isShuf ? Math.floor(Math.random()*songs.length) : (curIdx+1)%songs.length; playM(songs[curIdx].t, songs[curIdx].f, songs[curIdx].i); }
-        function prev() { curIdx = (curIdx-1+songs.length)%songs.length; playM(songs[curIdx].t, songs[curIdx].f, songs[curIdx].i); }
-        function toggleMode(type) { if(type==='shuf'){isShuf=!isShuf; document.getElementById('shuf').classList.toggle('active-mode');} else {isRep=!isRep; document.getElementById('rep').classList.toggle('active-mode');}}
+
+        function togglePlay() {
+            if(!audio.src) { playM(0); return; }
+            if(audio.paused) {
+                audio.play();
+                document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause";
+            } else {
+                audio.pause();
+                document.getElementById('playBtn').className = "fa-solid fa-circle-play play-pause";
+            }
+        }
+
+        function nextSong() {
+            if(isShuf) curIdx = Math.floor(Math.random() * songs.length);
+            else curIdx = (curIdx + 1) % songs.length;
+            playM(curIdx);
+        }
+
+        function prevSong() {
+            curIdx = (curIdx - 1 + songs.length) % songs.length;
+            playM(curIdx);
+        }
+
+        function toggleShuf() { isShuf = !isShuf; document.getElementById('shufBtn').classList.toggle('active-green'); }
+        function toggleRep() { isRep = !isRep; document.getElementById('repBtn').classList.toggle('active-green'); }
+
+        audio.onended = () => {
+            if(isRep) { audio.currentTime = 0; audio.play(); }
+            else nextSong();
+        };
 
         audio.ontimeupdate = () => {
             if(audio.duration) {
-                document.getElementById('bar').style.width = (audio.currentTime/audio.duration)*100 + "%";
-                document.getElementById('cTime').innerText = fmt(audio.currentTime);
-                document.getElementById('tTime').innerText = fmt(audio.duration);
+                const per = (audio.currentTime / audio.duration) * 100;
+                document.getElementById('barFill').style.width = per + "%";
+                document.getElementById('curTime').innerText = fmt(audio.currentTime);
+                document.getElementById('totTime').innerText = fmt(audio.duration);
             }
         };
-        function fmt(s) { let m=Math.floor(s/60), r=Math.floor(s%60); return m+":"+(r<10?"0"+r:r); }
-        function seek(e) { audio.currentTime = (e.offsetX / e.currentTarget.clientWidth) * audio.duration; }
+
+        function fmt(s) {
+            let m = Math.floor(s/60), r = Math.floor(s%60);
+            return m + ":" + (r < 10 ? "0"+r : r);
+        }
+
+        function seek(e) {
+            const b = e.currentTarget;
+            audio.currentTime = (e.offsetX / b.clientWidth) * audio.duration;
+        }
+
+        function changeVol() {
+            audio.volume = document.getElementById('volRange').value / 100;
+        }
     </script>
 </body>
 </html>
