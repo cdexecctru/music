@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Credos Music | Giriş</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: #000; color: white; font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .auth-box { background: #121212; padding: 40px; border-radius: 15px; width: 350px; text-align: center; border: 1px solid #282828; }
+        .logo { width: 70px; margin-bottom: 20px; border-radius: 50%; border: 2px solid #1DB954; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #242424; border: 1px solid transparent; border-radius: 5px; color: white; box-sizing: border-box; outline: none; }
+        button { width: 100%; padding: 12px; background: #1DB954; border: none; font-weight: bold; cursor: pointer; border-radius: 50px; }
+    </style>
+</head>
+<body>
+    <div class="auth-box">
+        <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" class="logo">
+        <h2>Giriş Yap</h2>
+        <input type="text" id="u" placeholder="Kullanıcı Adı">
+        <input type="password" id="p" placeholder="Şifre">
+        <button onclick="login()">Giriş</button>
+        <div style="margin-top:15px; font-size:12px;"><a href="register.html" style="color:#1DB954; text-decoration:none;">Hesap Oluştur</a></div>
+    </div>
+    <script>
+        function login() {
+            const user = document.getElementById('u').value;
+            const pass = document.getElementById('p').value;
+            // Şimdilik LocalStorage'da tutuyoruz, index.html'e geçiş için
+            localStorage.setItem('currentUser', user);
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

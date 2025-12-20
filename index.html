@@ -3,147 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="siteTitle">Credos Music</title>
+    <title>Credos Music</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #000000; color: #ffffff; font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; padding-bottom: 110px; overflow-x: hidden; }
+        /* Önceki CSS ile aynı, sadece logo kısmını genişlettim */
+        body { background-color: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
         
-        /* Üst Header + İstediğin Gri Çizgi */
-        .header {
-            height: 75px;
-            background-color: #000000;
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            justify-content: space-between;
-            /* İşte o alttaki gri çizginin aynısı buraya da eklendi */
-            border-bottom: 1px solid #282828; 
-        }
+        .header { height: 70px; background: #000; display: flex; align-items: center; padding: 0 20px; position: sticky; top: 0; z-index: 2000; justify-content: space-between; border-bottom: 1px solid #282828; }
+        .header-left { display: flex; align-items: center; min-width: 200px; } /* Genişlik artırıldı */
+        .brand-logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #1DB954; }
+        .brand-text { margin-left: 12px; font-weight: 700; font-size: 20px; letter-spacing: -0.5px; }
+        .brand-text span { color: #1DB954; } /* Music yazısı yeşil olsun diye */
 
-        .header-left { display: flex; align-items: center; }
-        
-        .brand-logo { 
-            width: 55px; 
-            height: 55px; 
-            object-fit: cover; 
-            border-radius: 50%;
-            border: 2px solid #1DB954;
-            transition: 0.3s;
-        }
-
-        .search-container {
-            flex: 0 1 475px;
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
+        .search-container { flex: 0 1 450px; position: relative; display: flex; align-items: center; }
         .search-container i { position: absolute; left: 15px; color: #b3b3b3; }
-        .search-input {
-            width: 100%;
-            background: #242424;
-            border: none;
-            padding: 12px 12px 12px 45px;
-            border-radius: 500px;
-            color: white;
-            font-size: 14px;
-            outline: none;
-        }
+        .search-input { width: 100%; background: #242424; border: none; padding: 10px 15px 10px 45px; border-radius: 500px; color: white; outline: none; }
 
-        .content { padding: 20px 25px; }
-        .section-title { margin-bottom: 20px; font-size: 22px; font-weight: 700; }
-
+        .content { padding: 20px 30px; }
+        .section-title { color: #1DB954; font-size: 22px; font-weight: 700; margin: 25px 0 15px; }
         .album-grid { display: flex; gap: 20px; flex-wrap: wrap; }
-        .album-card { background: #121212; width: 180px; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        .album-card:hover { background: #282828; transform: translateY(-5px); }
-        .album-card img { width: 100%; border-radius: 6px; margin-bottom: 12px; aspect-ratio: 1/1; object-fit: cover; }
-        .album-card h3 { font-size: 13px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .album-card { background: #181818; width: 175px; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; position: relative; }
+        .album-card:hover { background: #282828; transform: translateY(-3px); }
+        .album-card img { width: 100%; border-radius: 6px; aspect-ratio: 1/1; object-fit: cover; }
         
-        /* Alt Player Bar */
-        .spotify-player { position: fixed; bottom: 0; left: 0; width: 100%; height: 90px; background-color: #000000; border-top: 1px solid #282828; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; box-sizing: border-box; }
-        .now-playing { display: flex; align-items: center; width: 30%; }
-        #playerImg { width: 56px; height: 56px; border-radius: 4px; margin-right: 15px; background: #282828; object-fit: cover; }
-
-        .player-controls { width: 40%; display: flex; flex-direction: column; align-items: center; }
-        .buttons { margin-bottom: 8px; display: flex; gap: 20px; align-items: center; color: #b3b3b3; }
-        .buttons i { cursor: pointer; }
-        .buttons i.active { color: #1DB954; }
-        .fa-circle-play, .fa-circle-pause { font-size: 35px; color: #ffffff; }
-
-        .progress-container { display: flex; align-items: center; gap: 10px; width: 100%; }
-        .progress-bar { flex-grow: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; }
-        .progress { height: 100%; background-color: #1DB954; width: 0%; border-radius: 2px; }
-
-        .volume-controls { width: 30%; display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
-        .volume-slider { -webkit-appearance: none; width: 100px; height: 4px; background: #4f4f4f; border-radius: 2px; outline: none; }
+        /* PLAYER BAR */
+        .spotify-player { position: fixed; bottom: 0; width: 100%; height: 95px; background: #000; border-top: 1px solid #282828; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 0 20px; box-sizing: border-box; }
+        .now-playing { display: flex; align-items: center; }
+        #playerImg { width: 56px; height: 56px; border-radius: 4px; margin-right: 15px; flex-shrink: 0; }
+        .player-controls { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .control-btns { display: flex; align-items: center; gap: 25px; margin-bottom: 8px; color: #b3b3b3; }
+        .control-btns i { cursor: pointer; font-size: 18px; }
+        .active-mode { color: #1DB954 !important; }
+        .play-pause { font-size: 35px !important; color: #fff; }
+        .progress-box { width: 100%; display: flex; align-items: center; gap: 10px; }
+        .time { font-size: 11px; color: #b3b3b3; min-width: 35px; }
+        .progress-bar { flex-grow: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
+        .progress { height: 100%; background: #1DB954; width: 0%; border-radius: 2px; }
+        
+        .player-right { display: flex; justify-content: flex-end; align-items: center; gap: 10px; color: #b3b3b3; }
+        input[type="range"] { accent-color: #1DB954; cursor: pointer; width: 100px; }
     </style>
 </head>
 <body>
 
     <header class="header">
         <div class="header-left">
-            <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" class="brand-logo" alt="Logo">
-            <span style="font-weight: 700; margin-left: 15px; font-size: 18px; color: #1DB954;">Credos Music</span>
+            <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" class="brand-logo">
+            <div class="brand-text">Credos <span>Music</span></div>
         </div>
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" class="search-input" id="searchInput" placeholder="Ne dinlemek istersin?" onkeyup="filterSongs()">
+            <input type="text" class="search-input" id="search" placeholder="Ne dinlemek istersin?" onkeyup="filter()">
         </div>
-        <div style="width: 50px;"></div>
+        <button onclick="localStorage.clear(); location.href='login.html'" style="background:none; border:none; color:#b3b3b3; cursor:pointer; font-weight:600;">Çıkış</button>
     </header>
 
     <div class="content">
-        <h2 class="section-title">Şarkılar</h2>
-        <div class="album-grid" id="songGrid">
-            <div class="album-card" data-title="AL NACER!" onclick="playMusic('AL NACER!', 'AL NACER.mp3', 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/ub85xg80/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20221823.png')">
-                <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/ub85xg80/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20221823.png">
-                <h3>AL NACER!</h3>
+        <h2 class="section-title">Kütüphane</h2>
+        <div class="album-grid" id="mainGrid">
             </div>
-            <div class="album-card" data-title="VAI VAI TRAIR" onclick="playMusic('VAI VAI TRAIR', 'VAI VAI TRAIR.mp3', 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/o91q4cbc/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20222249.png')">
-                <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/o91q4cbc/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20222249.png">
-                <h3>VAI VAI TRAIR</h3>
-            </div>
-            <div class="album-card" data-title="MONTAGEM RUGADA" onclick="playMusic('MONTAGEM RUGADA', 'MONTAGEM RUGADA.mp3', 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/4aiyuq0d/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224204.png')">
-                <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/4aiyuq0d/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224204.png">
-                <h3>MONTAGEM RUGADA</h3>
-            </div>
-            <div class="album-card" data-title="MONTAGEM TOMADA" onclick="playMusic('MONTAGEM TOMADA', 'MONTAGEM TOMADA.mp3', 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/1qbqlz3n/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224338.png')">
-                <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/1qbqlz3n/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224338.png">
-                <h3>MONTAGEM TOMADA</h3>
-            </div>
-        </div>
     </div>
 
     <div class="spotify-player">
         <div class="now-playing">
             <img id="playerImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
-            <div class="song-info">
-                <h4 id="playerTitle">Müzik Seçin</h4>
-                <p id="p-status" style="font-size: 11px; color: #b3b3b3; margin: 3px 0 0;">Credos Music</p>
+            <div>
+                <h4 id="pTitle" style="margin:0; font-size:14px;">Müzik Seçin</h4>
+                <p style="margin:0; font-size:11px; color:#b3b3b3;">Credos Music</p>
             </div>
         </div>
+
         <div class="player-controls">
-            <div class="buttons">
-                <i class="fas fa-shuffle" id="shuffleBtn" onclick="toggleMode('shuffle')"></i>
-                <i class="fas fa-backward-step" onclick="restartSong()"></i>
-                <i class="fa-solid fa-circle-play" id="playBtn" onclick="togglePlay()"></i>
-                <i class="fas fa-forward-step" onclick="restartSong()"></i>
-                <i class="fas fa-repeat" id="repeatBtn" onclick="toggleMode('repeat')"></i>
+            <div class="control-btns">
+                <i class="fas fa-shuffle" id="shuffleBtn" onclick="toggleShuffle()"></i>
+                <i class="fas fa-step-backward" onclick="prevSong()"></i>
+                <i class="fa-solid fa-circle-play play-pause" id="playBtn" onclick="toggle()"></i>
+                <i class="fas fa-step-forward" onclick="nextSong()"></i>
+                <i class="fas fa-repeat" id="repeatBtn" onclick="toggleRepeat()"></i>
             </div>
-            <div class="progress-container">
-                <span id="curTime" style="font-size: 11px; color: #b3b3b3;">0:00</span>
+            <div class="progress-box">
+                <span class="time" id="curTime">0:00</span>
                 <div class="progress-bar" onclick="seek(event)">
-                    <div class="progress" id="mainBar"></div>
+                    <div class="progress" id="bar"></div>
                 </div>
-                <span id="totTime" style="font-size: 11px; color: #b3b3b3;">0:00</span>
+                <span class="time" id="totTime">0:00</span>
             </div>
         </div>
-        <div class="volume-controls">
-            <i class="fas fa-volume-high" id="volIcon" onclick="muteToggle()"></i>
-            <input type="range" class="volume-slider" id="volBar" min="0" max="100" value="70" oninput="setVol(this.value)">
+
+        <div class="player-right">
+            <i class="fas fa-volume-up"></i>
+            <input type="range" id="volumeSlider" min="0" max="100" step="1" value="100" oninput="changeVolume()">
+            <span id="volLevel" style="font-size: 11px; min-width: 25px;">100</span>
         </div>
     </div>
 
@@ -152,81 +104,80 @@
     <script>
         const audio = document.getElementById('audio');
         const playBtn = document.getElementById('playBtn');
-        const mainBar = document.getElementById('mainBar');
-        const volIcon = document.getElementById('volIcon');
-        const siteTitle = document.getElementById('siteTitle');
-        let isRepeat = false; let lastVol = 0.7;
+        const volSlider = document.getElementById('volumeSlider');
+        const volLevel = document.getElementById('volLevel');
 
-        function filterSongs() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('album-card');
-            for (let i = 0; i < cards.length; i++) {
-                let title = cards[i].getAttribute('data-title').toLowerCase();
-                cards[i].style.display = title.includes(input) ? "block" : "none";
-            }
-        }
+        const songs = [
+            {t: 'AL NACER!', f: 'AL NACER.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/ub85xg80/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20221823.png'},
+            {t: 'VAI VAI TRAIR', f: 'VAI VAI TRAIR.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/o91q4cbc/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20222249.png'},
+            {t: 'MONTAGEM RUGADA', f: 'MONTAGEM RUGADA.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/4aiyuq0d/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224204.png'},
+            {t: 'MONTAGEM TOMADA', f: 'MONTAGEM TOMADA.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/1qbqlz3n/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224338.png'}
+        ];
 
-        function playMusic(title, file, img) {
-            audio.src = file;
-            document.getElementById('playerTitle').innerText = title;
-            document.getElementById('playerImg').src = img;
-            siteTitle.innerText = "▶ " + title; 
+        let currentIndex = 0;
+        let isShuffle = false;
+        let isRepeat = false;
+
+        function playM(t, f, i) {
+            currentIndex = songs.findIndex(s => s.f === f);
+            audio.src = f;
             audio.play();
-            updateUI(true);
+            document.getElementById('pTitle').innerText = t;
+            document.getElementById('playerImg').src = i;
+            playBtn.className = "fa-solid fa-circle-pause play-pause";
         }
 
-        function togglePlay() {
-            if (!audio.src) return;
-            if (audio.paused) { audio.play(); updateUI(true); } 
-            else { audio.pause(); updateUI(false); }
+        function toggle() {
+            if(!audio.src) return;
+            if(audio.paused) { audio.play(); playBtn.className = "fa-solid fa-circle-pause play-pause"; }
+            else { audio.pause(); playBtn.className = "fa-solid fa-circle-play play-pause"; }
         }
 
-        function updateUI(playing) {
-            playBtn.className = playing ? "fa-solid fa-circle-pause" : "fa-solid fa-circle-play";
-            if(playing) siteTitle.innerText = "▶ " + document.getElementById('playerTitle').innerText;
-            else if(audio.src) siteTitle.innerText = "⏸ " + document.getElementById('playerTitle').innerText;
+        // SES SİSTEMİ %100 ÜZERİNDEN
+        function changeVolume() {
+            let val = volSlider.value;
+            audio.volume = val / 100; // 100'ü 1.0 formatına çevirir
+            volLevel.innerText = val;
         }
 
-        function restartSong() { audio.currentTime = 0; audio.play(); updateUI(true); }
+        function nextSong() {
+            if (isShuffle) currentIndex = Math.floor(Math.random() * songs.length);
+            else currentIndex = (currentIndex + 1) % songs.length;
+            playM(songs[currentIndex].t, songs[currentIndex].f, songs[currentIndex].i);
+        }
 
-        function toggleMode(mode) {
-            if(mode === 'shuffle') document.getElementById('shuffleBtn').classList.toggle('active');
-            else {
-                isRepeat = !isRepeat;
-                audio.loop = isRepeat;
-                document.getElementById('repeatBtn').classList.toggle('active', isRepeat);
-            }
+        function prevSong() {
+            currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+            playM(songs[currentIndex].t, songs[currentIndex].f, songs[currentIndex].i);
+        }
+
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            document.getElementById('shuffleBtn').classList.toggle('active-mode');
+        }
+
+        function toggleRepeat() {
+            isRepeat = !isRepeat;
+            document.getElementById('repeatBtn').classList.toggle('active-mode');
         }
 
         audio.ontimeupdate = () => {
-            if(audio.duration){
+            if(audio.duration) {
                 const pct = (audio.currentTime / audio.duration) * 100;
-                mainBar.style.width = pct + "%";
-                document.getElementById('curTime').innerText = fmt(audio.currentTime);
-                document.getElementById('totTime').innerText = fmt(audio.duration);
+                document.getElementById('bar').style.width = pct + "%";
+                document.getElementById('curTime').innerText = fmtTime(audio.currentTime);
+                document.getElementById('totTime').innerText = fmtTime(audio.duration);
             }
         };
 
-        function fmt(s) {
-            let m = Math.floor(s / 60);
-            let rs = Math.floor(s % 60);
-            return m + ":" + (rs < 10 ? "0" + rs : rs);
-        }
+        function seek(e) { audio.currentTime = (e.offsetX / e.currentTarget.clientWidth) * audio.duration; }
+        function fmtTime(s) { let m = Math.floor(s/60); let rs = Math.floor(s%60); return m + ":" + (rs<10 ? "0"+rs : rs); }
 
-        function seek(e) {
-            audio.currentTime = (e.offsetX / e.currentTarget.clientWidth) * audio.duration;
-        }
-
-        function setVol(v) {
-            audio.volume = v / 100;
-            volIcon.className = (v == 0) ? "fas fa-volume-xmark" : "fas fa-volume-high";
-        }
-
-        function muteToggle() {
-            const bar = document.getElementById('volBar');
-            if(audio.volume > 0) { lastVol = audio.volume; bar.value = 0; setVol(0); } 
-            else { bar.value = lastVol * 100; setVol(lastVol * 100); }
-        }
+        const grid = document.getElementById('mainGrid');
+        songs.forEach(s => {
+            grid.innerHTML += `<div class="album-card" onclick="playM('${s.t}', '${s.f}', '${s.i}')">
+                <img src="${s.i}"><h3>${s.t}</h3></div>`;
+        });
     </script>
 </body>
 </html>

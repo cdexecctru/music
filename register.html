@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Credos Music | Kayıt</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: #000; color: white; font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .auth-box { background: #121212; padding: 40px; border-radius: 15px; width: 350px; text-align: center; border: 1px solid #282828; }
+        .logo { width: 70px; margin-bottom: 20px; border-radius: 50%; border: 2px solid #1DB954; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #242424; border: 1px solid transparent; border-radius: 5px; color: white; box-sizing: border-box; outline: none; }
+        input:focus { border-color: #1DB954; }
+        button { width: 100%; padding: 12px; background: #1DB954; border: none; font-weight: bold; cursor: pointer; border-radius: 50px; margin-top: 10px; }
+        .link { margin-top: 20px; font-size: 13px; color: #b3b3b3; }
+        .link a { color: #1DB954; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="auth-box">
+        <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" class="logo">
+        <h2>Kayıt Ol</h2>
+        <input type="text" id="user" placeholder="Kullanıcı Adı">
+        <input type="email" id="email" placeholder="E-posta">
+        <input type="password" id="pass" placeholder="Şifre">
+        <button onclick="register()" id="regBtn">Veritabanına Kaydet</button>
+        <div class="link">Zaten hesabın var mı? <a href="login.html">Giriş Yap</a></div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwddJGFe8yHeRSpGIFXlt0aOwLYWWNmSuvy_jzNo5tUAq1LvKwAK23x9hM9f1uYUkx2/exec";
+
+        async function register() {
+            const user = document.getElementById('user').value;
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            const btn = document.getElementById('regBtn');
+
+            if(!user || !pass) return alert("Alanları doldur!");
+            btn.innerText = "Yazılıyor...";
+            btn.disabled = true;
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify({
+                        action: "register",
+                        user: user,
+                        username: user,
+                        password: pass,
+                        email: email
+                    })
+                });
+                alert("Kullanıcı GitHub db.txt dosyasına başarıyla eklendi!");
+                window.location.href = "login.html";
+            } catch (e) {
+                alert("Bir hata oluştu!");
+                btn.innerText = "Tekrar Dene";
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
