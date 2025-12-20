@@ -2,3 +2,6 @@
 user = dsds
 username = dsds
 password = dsdsds
+user = CREDOS
+username = CREDOS
+password = Emir9163cd!
