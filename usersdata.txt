@@ -11,3 +11,6 @@ password = 1331
 user = CREDOS
 username = CREDOS
 password = Emir9163cd!
+user = CREDO
+username = undefined
+password = undefined
