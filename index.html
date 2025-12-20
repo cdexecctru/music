@@ -3,43 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credos Music | Pro</title>
+    <title>Credos Music | Premium</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 110px; overflow-x: hidden; }
-        
         .header { height: 75px; background: #000; display: flex; align-items: center; padding: 0 20px; position: sticky; top: 0; z-index: 2000; border-bottom: 1px solid #282828; }
         .brand-logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #1DB954; }
         .brand-text { margin-left: 12px; font-weight: 700; font-size: 22px; letter-spacing: -1px; }
         .brand-text span { color: #1DB954; }
-
         .content { padding: 30px 40px; }
         .section-title { color: #fff; font-size: 24px; font-weight: 700; margin-bottom: 25px; }
-        
         .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; }
         .album-card { background: #181818; padding: 16px; border-radius: 8px; cursor: pointer; transition: 0.3s ease; position: relative; }
         .album-card:hover { background: #282828; }
         .album-card img { width: 100%; border-radius: 6px; aspect-ratio: 1/1; object-fit: cover; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
         .album-card h3 { font-size: 14px; margin: 15px 0 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
-        
         .play-hover { position: absolute; bottom: 85px; right: 25px; width: 48px; height: 48px; background: #1DB954; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(10px); transition: 0.3s; box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
         .album-card:hover .play-hover { opacity: 1; transform: translateY(0); }
         .play-hover i { color: #000; font-size: 20px; }
-
         .player-bar { position: fixed; bottom: 0; width: 100%; height: 95px; background: #000; border-top: 1px solid #282828; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 0 20px; box-sizing: border-box; z-index: 3000; }
         .controls { display: flex; flex-direction: column; align-items: center; }
         .btn-group { display: flex; align-items: center; gap: 25px; margin-bottom: 8px; color: #b3b3b3; }
         .btn-group i { cursor: pointer; font-size: 18px; transition: 0.2s; }
         .active-green { color: #1DB954 !important; }
         .play-pause { font-size: 38px !important; color: #fff; }
-        
         .progress-box { width: 100%; max-width: 600px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #b3b3b3; }
         .bar-bg { flex-grow: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
         .bar-fill { height: 100%; background: #1DB954; width: 0%; border-radius: 2px; }
-        
         .vol-box { display: flex; justify-content: flex-end; align-items: center; gap: 10px; color: #b3b3b3; }
         input[type="range"] { accent-color: #1DB954; cursor: pointer; width: 100px; }
     </style>
@@ -52,7 +45,7 @@
     </header>
 
     <div class="content">
-        <h2 class="section-title">Kitaplığın</h2>
+        <h2 class="section-title">Popüler Parçalar</h2>
         <div class="album-grid" id="mainGrid"></div>
     </div>
 
@@ -88,8 +81,10 @@
 
     <script>
         const audio = document.getElementById('audio');
-        
         const songs = [
+            {t: 'Nada Nada', f: 'Nada.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/vn8mx2sq/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20014523.png'},
+            {t: 'Skyfall', f: 'skyfall.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/5hv1kkvh/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20014845.png'},
+            {t: 'No Era Amor', f: 'noeraamor.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/5xok8sfy/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20015041.png'},
             {t: 'Kusura Bakma', f: 'blok3kusurabakma.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/y1s0n87i/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20014128.png'},
             {t: 'Git', f: 'blok3git.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/8eeeqfnz/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20013949.png'},
             {t: 'Çok Pardon', f: 'askimcokpardon.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/jk7zn96u/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20012651.png'},
@@ -127,13 +122,8 @@
 
         function togglePlay() {
             if(!audio.src) { playM(0); return; }
-            if(audio.paused) {
-                audio.play();
-                document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause";
-            } else {
-                audio.pause();
-                document.getElementById('playBtn').className = "fa-solid fa-circle-play play-pause";
-            }
+            if(audio.paused) { audio.play(); document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause"; }
+            else { audio.pause(); document.getElementById('playBtn').className = "fa-solid fa-circle-play play-pause"; }
         }
 
         function nextSong() {
@@ -150,10 +140,7 @@
         function toggleShuf() { isShuf = !isShuf; document.getElementById('shufBtn').classList.toggle('active-green'); }
         function toggleRep() { isRep = !isRep; document.getElementById('repBtn').classList.toggle('active-green'); }
 
-        audio.onended = () => {
-            if(isRep) { audio.currentTime = 0; audio.play(); }
-            else nextSong();
-        };
+        audio.onended = () => { if(isRep) { audio.currentTime = 0; audio.play(); } else nextSong(); };
 
         audio.ontimeupdate = () => {
             if(audio.duration) {
@@ -164,19 +151,9 @@
             }
         };
 
-        function fmt(s) {
-            let m = Math.floor(s/60), r = Math.floor(s%60);
-            return m + ":" + (r < 10 ? "0"+r : r);
-        }
-
-        function seek(e) {
-            const b = e.currentTarget;
-            audio.currentTime = (e.offsetX / b.clientWidth) * audio.duration;
-        }
-
-        function changeVol() {
-            audio.volume = document.getElementById('volRange').value / 100;
-        }
+        function fmt(s) { let m = Math.floor(s/60), r = Math.floor(s%60); return m + ":" + (r < 10 ? "0"+r : r); }
+        function seek(e) { const b = e.currentTarget; audio.currentTime = (e.offsetX / b.clientWidth) * audio.duration; }
+        function changeVol() { audio.volume = document.getElementById('volRange').value / 100; }
     </script>
 </body>
 </html>
