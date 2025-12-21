@@ -9,39 +9,93 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 110px; overflow-x: hidden; }
-        .header { height: 75px; background: #000; display: flex; align-items: center; padding: 0 20px; position: sticky; top: 0; z-index: 2000; border-bottom: 1px solid #282828; }
-        .brand-logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #1DB954; }
-        .brand-text { margin-left: 12px; font-weight: 700; font-size: 22px; letter-spacing: -1px; }
+        body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 120px; overflow-x: hidden; }
+        
+        /* Header */
+        .header { height: 75px; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; position: sticky; top: 0; z-index: 2000; border-bottom: 1px solid #282828; }
+        .header-left { display: flex; align-items: center; }
+        .view-controls { display: flex; gap: 10px; }
+        .view-btn { background: #181818; border: 1px solid #333; color: #fff; padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-size: 14px; }
+        .view-btn.active { background: #1DB954; color: #000; border-color: #1DB954; }
+
+        .brand-logo { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #1DB954; }
+        .brand-text { margin-left: 12px; font-weight: 700; font-size: 20px; letter-spacing: -1px; }
         .brand-text span { color: #1DB954; }
-        .content { padding: 30px 40px; }
-        .section-title { color: #fff; font-size: 24px; font-weight: 700; margin-bottom: 25px; }
+
+        /* Grid System */
+        .content { padding: 20px 40px; }
+        .section-title { font-size: 24px; font-weight: 700; margin-bottom: 25px; }
         .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; }
+        
+        /* Album Card & Fixed Play Button */
         .album-card { background: #181818; padding: 16px; border-radius: 8px; cursor: pointer; transition: 0.3s ease; position: relative; }
         .album-card:hover { background: #282828; }
         .album-card img { width: 100%; border-radius: 6px; aspect-ratio: 1/1; object-fit: cover; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
         .album-card h3 { font-size: 14px; margin: 15px 0 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
-        .play-hover { position: absolute; bottom: 85px; right: 25px; width: 48px; height: 48px; background: #1DB954; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transform: translateY(10px); transition: 0.3s; box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
+
+        /* YEŞİL BUTON DÜZELTME */
+        .play-hover { 
+            position: absolute; 
+            bottom: 85px; 
+            right: 25px; 
+            width: 48px; 
+            height: 48px; 
+            background: #1DB954; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            opacity: 0; 
+            transform: translateY(8px); 
+            transition: all 0.3s ease; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            z-index: 10;
+        }
         .album-card:hover .play-hover { opacity: 1; transform: translateY(0); }
         .play-hover i { color: #000; font-size: 20px; }
-        .player-bar { position: fixed; bottom: 0; width: 100%; height: 95px; background: #000; border-top: 1px solid #282828; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; padding: 0 20px; box-sizing: border-box; z-index: 3000; }
-        .controls { display: flex; flex-direction: column; align-items: center; }
-        .btn-group { display: flex; align-items: center; gap: 25px; margin-bottom: 8px; color: #b3b3b3; }
-        .btn-group i { cursor: pointer; font-size: 18px; transition: 0.2s; }
-        .active-green { color: #1DB954 !important; }
+
+        /* Mobile View Overwrite */
+        .mobile-view .content { padding: 20px; }
+        .mobile-view .album-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+        .mobile-view .play-hover { display: none !important; }
+
+        /* Player Bar */
+        .player-bar { position: fixed; bottom: 0; width: 100%; min-height: 95px; background: #000; border-top: 1px solid #282828; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; padding: 10px 20px; box-sizing: border-box; z-index: 3000; }
+        .now-playing { display: flex; align-items: center; width: 30%; min-width: 180px; }
+        .now-playing img { width: 56px; height: 56px; border-radius: 4px; margin-right: 15px; object-fit: cover; }
+        .track-info h4 { margin: 0; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+        
+        .player-controls { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 250px; }
+        .btn-group { display: flex; align-items: center; gap: 25px; margin-bottom: 8px; }
+        .btn-group i { cursor: pointer; font-size: 18px; color: #b3b3b3; }
         .play-pause { font-size: 38px !important; color: #fff; }
-        .progress-box { width: 100%; max-width: 600px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #b3b3b3; }
-        .bar-bg { flex-grow: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
+        .active-green { color: #1DB954 !important; }
+
+        .progress-container { width: 100%; max-width: 600px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #b3b3b3; }
+        .bar-bg { flex: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
         .bar-fill { height: 100%; background: #1DB954; width: 0%; border-radius: 2px; }
-        .vol-box { display: flex; justify-content: flex-end; align-items: center; gap: 10px; color: #b3b3b3; }
+
+        .volume-controls { display: flex; align-items: center; gap: 10px; width: 30%; justify-content: flex-end; min-width: 120px; }
         input[type="range"] { accent-color: #1DB954; cursor: pointer; width: 100px; }
+
+        @media (max-width: 768px) {
+            .now-playing { width: 100%; margin-bottom: 10px; }
+            .volume-controls { display: none; }
+            .player-controls { width: 100%; }
+        }
     </style>
 </head>
-<body>
+<body id="bodyTag">
 
     <header class="header">
-        <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" class="brand-logo">
-        <div class="brand-text">Credos <span>Music</span></div>
+        <div class="header-left">
+            <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" class="brand-logo">
+            <div class="brand-text">Credos <span>Music</span></div>
+        </div>
+        <div class="view-controls">
+            <button class="view-btn active" id="pcBtn" onclick="setView('pc')"><i class="fas fa-desktop"></i></button>
+            <button class="view-btn" id="mobBtn" onclick="setView('mob')"><i class="fas fa-mobile-alt"></i></button>
+        </div>
     </header>
 
     <div class="content">
@@ -50,14 +104,14 @@
     </div>
 
     <div class="player-bar">
-        <div style="display:flex; align-items:center;">
-            <img id="pImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" style="width:56px; height:56px; border-radius:4px; margin-right:15px; object-fit: cover;">
-            <div style="overflow: hidden; max-width: 180px;">
-                <h4 id="pTitle" style="margin:0; font-size:14px; white-space: nowrap; text-overflow: ellipsis;">Müzik Seçin</h4>
+        <div class="now-playing">
+            <img id="pImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
+            <div class="track-info">
+                <h4 id="pTitle">Müzik Seçin</h4>
                 <p style="margin:0; font-size:11px; color:#b3b3b3;">Credos Music</p>
             </div>
         </div>
-        <div class="controls">
+        <div class="player-controls">
             <div class="btn-group">
                 <i class="fas fa-shuffle" id="shufBtn" onclick="toggleShuf()"></i>
                 <i class="fas fa-step-backward" onclick="prevSong()"></i>
@@ -65,13 +119,13 @@
                 <i class="fas fa-step-forward" onclick="nextSong()"></i>
                 <i class="fas fa-repeat" id="repBtn" onclick="toggleRep()"></i>
             </div>
-            <div class="progress-box">
+            <div class="progress-container">
                 <span id="curTime">0:00</span>
                 <div class="bar-bg" onclick="seek(event)"><div class="bar-fill" id="barFill"></div></div>
                 <span id="totTime">0:00</span>
             </div>
         </div>
-        <div class="vol-box">
+        <div class="volume-controls">
              <i class="fas fa-volume-up"></i>
              <input type="range" id="volRange" min="0" max="100" value="100" oninput="changeVol()">
         </div>
@@ -120,7 +174,16 @@
                         <h3>${s.t}</h3>
                     </div>`;
             });
+            if(window.innerWidth < 768) setView('mob');
         };
+
+        function setView(mode) {
+            const body = document.getElementById('bodyTag');
+            const pcBtn = document.getElementById('pcBtn');
+            const mobBtn = document.getElementById('mobBtn');
+            if(mode === 'mob') { body.classList.add('mobile-view'); mobBtn.classList.add('active'); pcBtn.classList.remove('active'); }
+            else { body.classList.remove('mobile-view'); pcBtn.classList.add('active'); mobBtn.classList.remove('active'); }
+        }
 
         function playM(idx) {
             curIdx = idx;
@@ -135,13 +198,8 @@
 
         function togglePlay() {
             if(!audio.src) { playM(0); return; }
-            if(audio.paused) { 
-                audio.play(); 
-                document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause"; 
-            } else { 
-                audio.pause(); 
-                document.getElementById('playBtn').className = "fa-solid fa-circle-play play-pause"; 
-            }
+            if(audio.paused) { audio.play(); document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause"; }
+            else { audio.pause(); document.getElementById('playBtn').className = "fa-solid fa-circle-play play-pause"; }
         }
 
         function nextSong() {
@@ -173,7 +231,6 @@
         function seek(e) { const b = e.currentTarget; audio.currentTime = (e.offsetX / b.clientWidth) * audio.duration; }
         function changeVol() { audio.volume = document.getElementById('volRange').value / 100; }
 
-        // MEDYA TUŞLARI VE BİLDİRİM PANELİ DESTEĞİ
         function updateMediaSession() {
             if ('mediaSession' in navigator) {
                 const s = songs[curIdx];
@@ -183,7 +240,6 @@
                     album: 'Premium Library',
                     artwork: [{ src: s.i, sizes: '512x512', type: 'image/png' }]
                 });
-
                 navigator.mediaSession.setActionHandler('play', () => togglePlay());
                 navigator.mediaSession.setActionHandler('pause', () => togglePlay());
                 navigator.mediaSession.setActionHandler('previoustrack', () => prevSong());
