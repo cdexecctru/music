@@ -130,12 +130,18 @@
             document.getElementById('pTitle').innerText = s.t;
             document.getElementById('pImg').src = s.i;
             document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause";
+            updateMediaSession();
         }
 
         function togglePlay() {
             if(!audio.src) { playM(0); return; }
-            if(audio.paused) { audio.play(); document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause"; }
-            else { audio.pause(); document.getElementById('playBtn').className = "fa-solid fa-circle-play play-pause"; }
+            if(audio.paused) { 
+                audio.play(); 
+                document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-pause"; 
+            } else { 
+                audio.pause(); 
+                document.getElementById('playBtn').className = "fa-solid fa-circle-play play-pause"; 
+            }
         }
 
         function nextSong() {
@@ -166,6 +172,24 @@
         function fmt(s) { let m = Math.floor(s/60), r = Math.floor(s%60); return m + ":" + (r < 10 ? "0"+r : r); }
         function seek(e) { const b = e.currentTarget; audio.currentTime = (e.offsetX / b.clientWidth) * audio.duration; }
         function changeVol() { audio.volume = document.getElementById('volRange').value / 100; }
+
+        // MEDYA TUŞLARI VE BİLDİRİM PANELİ DESTEĞİ
+        function updateMediaSession() {
+            if ('mediaSession' in navigator) {
+                const s = songs[curIdx];
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: s.t,
+                    artist: 'Credos Music',
+                    album: 'Premium Library',
+                    artwork: [{ src: s.i, sizes: '512x512', type: 'image/png' }]
+                });
+
+                navigator.mediaSession.setActionHandler('play', () => togglePlay());
+                navigator.mediaSession.setActionHandler('pause', () => togglePlay());
+                navigator.mediaSession.setActionHandler('previoustrack', () => prevSong());
+                navigator.mediaSession.setActionHandler('nexttrack', () => nextSong());
+            }
+        }
     </script>
 </body>
 </html>
