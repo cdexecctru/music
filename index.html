@@ -10,19 +10,13 @@
     <style>
         :root { --green: #1DB954; --bg: #000; }
         body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 120px; overflow-x: hidden; }
-
-        /* HEADER */
         .header { height: 75px; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #282828; }
         .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; min-width: 200px; }
         .brand img { width: 35px; border-radius: 50%; border: 2px solid var(--green); }
         .search-bar { background: #242424; border-radius: 25px; padding: 10px 20px; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 12px; }
         .search-bar input { background: transparent; border: none; color: #fff; width: 100%; outline: none; }
-
-        /* DİL BUTONU */
         .lang-toggle { background: #282828; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.3s; min-width: 70px; text-align: center; }
         .lang-toggle:hover { background: var(--green); border-color: var(--green); }
-
-        /* GRID */
         .content { padding: 30px; }
         .section-title { font-size: 24px; margin-bottom: 20px; font-weight: 700; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; }
@@ -30,57 +24,40 @@
         .card:hover { background: #282828; }
         .card img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; margin-bottom: 12px; background: #181818; }
         .card h3 { font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        /* PLAYER BAR */
         .player { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 1px solid #282828; padding: 15px 30px; box-sizing: border-box; z-index: 2000; }
         .p-inner { display: flex; align-items: center; justify-content: space-between; max-width: 100%; }
-        
         .track-info { display: flex; align-items: center; gap: 15px; width: 30%; min-width: 200px; }
         .track-info img { width: 56px; height: 56px; border-radius: 4px; object-fit: cover; }
-
         .controls { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .btns { display: flex; align-items: center; gap: 25px; }
         .btns i { font-size: 18px; color: #b3b3b3; cursor: pointer; transition: 0.2s; }
         .btns i:hover { color: #fff; }
         .btns i.active { color: var(--green); }
         .play-main { font-size: 35px !important; color: #fff; }
-
         .progress-box { width: 100%; max-width: 500px; display: flex; align-items: center; gap: 12px; font-size: 11px; color: #b3b3b3; }
         .bar-bg { flex: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
         .bar-fill { height: 100%; background: var(--green); width: 0%; border-radius: 2px; transition: width 0.1s linear; }
-
         .volume { width: 30%; display: flex; align-items: center; justify-content: flex-end; gap: 12px; min-width: 150px; }
         input[type="range"] { accent-color: var(--green); cursor: pointer; }
-
-        @media (max-width: 768px) {
-            .search-bar { display: none; }
-            .volume { display: none; }
-            .track-info { width: 60%; }
-        }
+        @media (max-width: 768px) { .search-bar { display: none; } .volume { display: none; } .track-info { width: 60%; } }
     </style>
 </head>
 <body>
-
     <header class="header">
         <div class="brand"><img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png"><span>Credos <span style="color:var(--green)">Music</span></span></div>
         <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Ne dinlemek istersin?" oninput="searchMusic()"></div>
-        <div style="min-width: 100px; display: flex; justify-content: flex-end;">
-            <div class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</div>
-        </div>
+        <div style="min-width: 100px; display: flex; justify-content: flex-end;"><div class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</div></div>
     </header>
-
     <div class="content">
         <div class="section-title" id="libTitle">Kitaplığın</div>
         <div class="grid" id="mainGrid"></div>
     </div>
-
     <div class="player">
         <div class="p-inner">
             <div class="track-info">
                 <img id="pImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
                 <div><h4 id="pTitle" style="margin:0; font-size:14px;">Müzik Seçin</h4><p id="pSub" style="margin:4px 0 0; font-size:11px; color:#b3b3b3;">Credos Premium</p></div>
             </div>
-
             <div class="controls">
                 <div class="btns">
                     <i class="fas fa-shuffle" id="shuffleBtn" onclick="toggleShuffle()"></i>
@@ -95,11 +72,9 @@
                     <span id="totT">0:00</span>
                 </div>
             </div>
-
             <div class="volume"><i class="fas fa-volume-up"></i><input type="range" min="0" max="100" value="100" oninput="setVol(this.value)"></div>
         </div>
     </div>
-
     <audio id="audio"></audio>
 
     <script>
@@ -130,20 +105,12 @@
             {t: 'Montagem Supersonic', f: 'supersonic.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/5fkiw4ml/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20235453.png'},
             {t: 'SUNRISE', f: 'sunrise.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/tv4nrmap/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-22%20080344.png'},
             {t: 'FRESH', f: 'fresh.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/vgejr6dg/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-22%20080556.png'},
-            {t: 'Çaresizim', f: 'caresizim.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/py1fg7xg/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-22%20184710.png'},
+            {t: 'Çaresizim', f: 'caresizim.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/refs/heads/main/py1fg7xg/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-22%20184710.png'},
             {t: 'Montagem Tomada', f: 'MONTAGEM TOMADA.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/1qbqlz3n/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224338.png'}
         ];
 
-        let curIdx = 0;
-        let isShuffle = false;
-        let isRepeat = false;
-        let lang = 'TR';
-        const audio = document.getElementById('audio');
-
-        const translations = {
-            TR: { search: 'Ne dinlemek istersin?', lib: 'Kitaplığın', select: 'Müzik Seçin' },
-            EN: { search: 'What do you want to listen to?', lib: 'Your Library', select: 'Select Music' }
-        };
+        let curIdx = 0; let isShuffle = false; let isRepeat = false; let lang = 'TR'; const audio = document.getElementById('audio');
+        const translations = { TR: { search: 'Ne dinlemek istersin?', lib: 'Kitaplığın', select: 'Müzik Seçin' }, EN: { search: 'What do you want to listen to?', lib: 'Your Library', select: 'Select Music' } };
 
         function toggleLang() {
             lang = lang === 'TR' ? 'EN' : 'TR';
@@ -156,61 +123,44 @@
         }
 
         function render(list) {
-            const grid = document.getElementById('mainGrid');
-            grid.innerHTML = "";
+            const grid = document.getElementById('mainGrid'); grid.innerHTML = "";
             list.forEach((s) => {
                 const realIdx = songs.findIndex(x => x.t === s.t);
                 grid.innerHTML += `<div class="card" onclick="playS(${realIdx})"><img src="${s.i || 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png'}"><h3>${s.t}</h3></div>`;
             });
         }
 
-        function searchMusic() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            render(songs.filter(s => s.t.toLowerCase().includes(term)));
-        }
-
+        function searchMusic() { const term = document.getElementById('searchInput').value.toLowerCase(); render(songs.filter(s => s.t.toLowerCase().includes(term))); }
         window.onload = () => render(songs);
 
+        // --- GÜNCELLENEN RPC FONKSİYONU ---
         function playS(i) {
             curIdx = i;
             audio.src = songs[curIdx].f;
             audio.play();
-            document.getElementById('pTitle').innerText = songs[curIdx].t;
-            document.getElementById('pImg').src = songs[curIdx].i || 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png';
+            const songName = songs[curIdx].t;
+            const songImg = songs[curIdx].i || 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png';
+            document.getElementById('pTitle').innerText = songName;
+            document.getElementById('pImg').src = songImg;
             document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-main";
+
+            // Python Bridge
+            fetch('http://localhost:5000/update', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ song: songName, image: songImg })
+            }).catch(e => console.log("RPC Sunucusu kapalı."));
         }
 
-        function toggle() {
-            if(!audio.src) { playS(0); return; }
-            audio.paused ? (audio.play(), document.getElementById('playBtn').className="fa-solid fa-circle-pause play-main") : (audio.pause(), document.getElementById('playBtn').className="fa-solid fa-circle-play play-main");
-        }
-
-        function next() {
-            if (isRepeat) { playS(curIdx); return; }
-            curIdx = isShuffle ? Math.floor(Math.random() * songs.length) : (curIdx + 1) % songs.length;
-            playS(curIdx);
-        }
-
-        function prev() {
-            curIdx = (curIdx - 1 + songs.length) % songs.length;
-            playS(curIdx);
-        }
-
+        function toggle() { if(!audio.src) { playS(0); return; } audio.paused ? (audio.play(), document.getElementById('playBtn').className="fa-solid fa-circle-pause play-main") : (audio.pause(), document.getElementById('playBtn').className="fa-solid fa-circle-play play-main"); }
+        function next() { if (isRepeat) { playS(curIdx); return; } curIdx = isShuffle ? Math.floor(Math.random() * songs.length) : (curIdx + 1) % songs.length; playS(curIdx); }
+        function prev() { curIdx = (curIdx - 1 + songs.length) % songs.length; playS(curIdx); }
         function toggleShuffle() { isShuffle = !isShuffle; document.getElementById('shuffleBtn').classList.toggle('active', isShuffle); }
         function toggleRepeat() { isRepeat = !isRepeat; document.getElementById('repeatBtn').classList.toggle('active', isRepeat); }
-
         audio.onended = () => next();
         function setVol(v) { audio.volume = v / 100; }
         function seek(e) { audio.currentTime = (e.offsetX / e.currentTarget.clientWidth) * audio.duration; }
-        
-        audio.ontimeupdate = () => {
-            if(audio.duration) {
-                const p = (audio.currentTime / audio.duration) * 100;
-                document.getElementById('fill').style.width = p + "%";
-                document.getElementById('curT').innerText = fmt(audio.currentTime);
-                document.getElementById('totT').innerText = fmt(audio.duration);
-            }
-        };
+        audio.ontimeupdate = () => { if(audio.duration) { const p = (audio.currentTime / audio.duration) * 100; document.getElementById('fill').style.width = p + "%"; document.getElementById('curT').innerText = fmt(audio.currentTime); document.getElementById('totT').innerText = fmt(audio.duration); } };
         function fmt(s) { let m=Math.floor(s/60), r=Math.floor(s%60); return m+":"+(r<10?"0"+r:r); }
     </script>
 </body>
