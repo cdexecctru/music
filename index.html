@@ -18,8 +18,13 @@
         .search-bar { background: #242424; border-radius: 25px; padding: 10px 20px; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 12px; }
         .search-bar input { background: transparent; border: none; color: #fff; width: 100%; outline: none; }
 
+        /* DİL BUTONU */
+        .lang-toggle { background: #282828; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.3s; min-width: 70px; text-align: center; }
+        .lang-toggle:hover { background: var(--green); border-color: var(--green); }
+
         /* GRID */
         .content { padding: 30px; }
+        .section-title { font-size: 24px; margin-bottom: 20px; font-weight: 700; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; }
         .card { background: #121212; padding: 16px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
         .card:hover { background: #282828; }
@@ -46,6 +51,12 @@
 
         .volume { width: 30%; display: flex; align-items: center; justify-content: flex-end; gap: 12px; min-width: 150px; }
         input[type="range"] { accent-color: var(--green); cursor: pointer; }
+
+        @media (max-width: 768px) {
+            .search-bar { display: none; }
+            .volume { display: none; }
+            .track-info { width: 60%; }
+        }
     </style>
 </head>
 <body>
@@ -53,25 +64,30 @@
     <header class="header">
         <div class="brand"><img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png"><span>Credos <span style="color:var(--green)">Music</span></span></div>
         <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Ne dinlemek istersin?" oninput="searchMusic()"></div>
-        <div style="min-width: 200px;"></div>
+        <div style="min-width: 100px; display: flex; justify-content: flex-end;">
+            <div class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</div>
+        </div>
     </header>
 
-    <div class="content"><div class="grid" id="mainGrid"></div></div>
+    <div class="content">
+        <div class="section-title" id="libTitle">Kitaplığın</div>
+        <div class="grid" id="mainGrid"></div>
+    </div>
 
     <div class="player">
         <div class="p-inner">
             <div class="track-info">
                 <img id="pImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
-                <div><h4 id="pTitle" style="margin:0; font-size:14px;">Müzik Seçin</h4><p style="margin:4px 0 0; font-size:11px; color:#b3b3b3;">Credos Premium</p></div>
+                <div><h4 id="pTitle" style="margin:0; font-size:14px;">Müzik Seçin</h4><p id="pSub" style="margin:4px 0 0; font-size:11px; color:#b3b3b3;">Credos Premium</p></div>
             </div>
 
             <div class="controls">
                 <div class="btns">
-                    <i class="fas fa-shuffle" id="shuffleBtn" onclick="toggleShuffle()" title="Karıştır"></i>
+                    <i class="fas fa-shuffle" id="shuffleBtn" onclick="toggleShuffle()"></i>
                     <i class="fas fa-step-backward" onclick="prev()"></i>
                     <i class="fa-solid fa-circle-play play-main" id="playBtn" onclick="toggle()"></i>
                     <i class="fas fa-step-forward" onclick="next()"></i>
-                    <i class="fas fa-repeat" id="repeatBtn" onclick="toggleRepeat()" title="Tekrarla"></i>
+                    <i class="fas fa-repeat" id="repeatBtn" onclick="toggleRepeat()"></i>
                 </div>
                 <div class="progress-box">
                     <span id="curT">0:00</span>
@@ -118,7 +134,23 @@
         let curIdx = 0;
         let isShuffle = false;
         let isRepeat = false;
+        let lang = 'TR';
         const audio = document.getElementById('audio');
+
+        const translations = {
+            TR: { search: 'Ne dinlemek istersin?', lib: 'Kitaplığın', select: 'Müzik Seçin' },
+            EN: { search: 'What do you want to listen to?', lib: 'Your Library', select: 'Select Music' }
+        };
+
+        function toggleLang() {
+            lang = lang === 'TR' ? 'EN' : 'TR';
+            document.getElementById('langBtn').innerText = lang === 'TR' ? 'EN' : 'TR';
+            document.getElementById('searchInput').placeholder = translations[lang].search;
+            document.getElementById('libTitle').innerText = translations[lang].lib;
+            if (document.getElementById('pTitle').innerText === translations['TR'].select || document.getElementById('pTitle').innerText === translations['EN'].select) {
+                document.getElementById('pTitle').innerText = translations[lang].select;
+            }
+        }
 
         function render(list) {
             const grid = document.getElementById('mainGrid');
