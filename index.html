@@ -42,7 +42,7 @@
         @media (max-width: 768px) { .search-bar { display: none; } .volume { display: none; } .track-info { width: 60%; } }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
     <header class="header">
         <div class="brand"><img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png"><span>Credos <span style="color:var(--green)">Music</span></span></div>
         <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Ne dinlemek istersin?" oninput="searchMusic()"></div>
@@ -78,6 +78,14 @@
     <audio id="audio"></audio>
 
     <script>
+        // --- GÜVENLİK KODLARI (SAĞ TIK VE İNCELE ENGELLEME) ---
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || (e.ctrlKey && e.keyCode == 85)) {
+                return false;
+            }
+        };
+
         const songs = [
             {t: 'Nedenini Sorma', f: 'nedeninisorma.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/b12klnxm/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20120937.png'},
             {t: 'Dene', f: 'uzidene.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/eomujsdt/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20120525.png'},
@@ -133,7 +141,6 @@
         function searchMusic() { const term = document.getElementById('searchInput').value.toLowerCase(); render(songs.filter(s => s.t.toLowerCase().includes(term))); }
         window.onload = () => render(songs);
 
-        // --- GÜNCELLENEN RPC FONKSİYONU ---
         function playS(i) {
             curIdx = i;
             audio.src = songs[curIdx].f;
@@ -144,7 +151,6 @@
             document.getElementById('pImg').src = songImg;
             document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-main";
 
-            // Python Bridge
             fetch('http://localhost:5000/update', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
