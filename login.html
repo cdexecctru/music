@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credos Music | Giriş Yap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <style>
+        body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; margin: 0; }
+        .login-card { background: #121212; padding: 50px; border-radius: 15px; text-align: center; width: 100%; max-width: 400px; border: 1px solid #282828; }
+        .logo { width: 60px; margin-bottom: 20px; }
+        h1 { font-size: 28px; margin-bottom: 30px; }
+        .btn-google { background: #fff; color: #000; border: none; padding: 15px 30px; border-radius: 30px; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
+        .btn-google:hover { transform: scale(1.02); background: #f0f0f0; }
+        .footer-link { margin-top: 20px; color: #b3b3b3; font-size: 14px; text-decoration: none; display: block; }
+        .footer-link span { color: #1DB954; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png" class="logo">
+        <h1>Müzik seni bekliyor.</h1>
+        <button class="btn-google" id="loginBtn">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
+            Google ile Giriş Yap
+        </button>
+        <a href="register.html" class="footer-link">Hesabın yok mu? <span>Kayıt Ol</span></a>
+    </div>
+
+    <script>
+        // Senin attığın Google Apps Script linki knk .d
+        const CONST_GAS_URL = "https://script.google.com/macros/s/AKfycbx5nwWNZ_e5KZlZ57mbnrDAn6Ckvxei34e_ShIM5QupPzk5gU2JkmS8dBEdl5dHY6E7ng/exec";
+
+        async function initAuth() {
+            try {
+                const response = await fetch(CONST_GAS_URL);
+                const config = await response.json();
+                firebase.initializeApp(config);
+                
+                const provider = new firebase.auth.GoogleAuthProvider();
+                
+                document.getElementById('loginBtn').onclick = () => {
+                    firebase.auth().signInWithPopup(provider).then(() => {
+                        window.location.href = "index.html";
+                    }).catch(e => alert("Giriş Hatası: " + e.message));
+                };
+            } catch (e) { 
+                console.error("Config alınamadı!", e);
+                alert("Sistem şu an meşgul, lütfen sayfayı yenile knk!");
+            }
+        }
+        initAuth();
+    </script>
+</body>
+</html>
