@@ -8,56 +8,76 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --green: #1DB954; --bg: #000; }
-        body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 150px; overflow-x: hidden; }
+        :root { --green: #1DB954; --bg: #000; --card-bg: #121212; }
+        body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 160px; overflow-x: hidden; }
+        
+        /* Header */
         .header { height: 75px; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #282828; }
-        .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; min-width: 200px; }
+        .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; }
         .brand img { width: 35px; border-radius: 50%; border: 2px solid var(--green); }
         .search-bar { background: #242424; border-radius: 25px; padding: 10px 20px; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 12px; }
         .search-bar input { background: transparent; border: none; color: #fff; width: 100%; outline: none; }
-        .lang-toggle { background: #282828; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.3s; min-width: 70px; text-align: center; }
-        .lang-toggle:hover { background: var(--green); border-color: var(--green); }
-        .content { padding: 30px; }
-        .section-title { font-size: 24px; margin-bottom: 20px; font-weight: 700; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px; }
-        .card { background: #121212; padding: 16px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        .card:hover { background: #282828; }
-        .card img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; margin-bottom: 12px; background: #181818; }
-        .card h3 { font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        .footer-info { margin-top: 50px; padding: 20px; border-top: 1px solid #282828; text-align: center; color: #b3b3b3; font-size: 12px; }
-        .kvkk-link { color: var(--green); text-decoration: none; font-weight: 600; margin-top: 10px; display: inline-block; cursor: pointer; }
-        .kvkk-link:hover { text-decoration: underline; }
+        .lang-toggle { background: #282828; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; }
 
-        .player { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 1px solid #282828; padding: 15px 30px; box-sizing: border-box; z-index: 2000; }
-        .p-inner { display: flex; align-items: center; justify-content: space-between; max-width: 100%; }
-        .track-info { display: flex; align-items: center; gap: 15px; width: 30%; min-width: 200px; }
-        .track-info img { width: 56px; height: 56px; border-radius: 4px; object-fit: cover; }
+        /* Grid */
+        .content { padding: 20px; }
+        .section-title { font-size: 22px; margin-bottom: 20px; font-weight: 700; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .card { background: var(--card-bg); padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .card:hover { background: #282828; }
+        .card img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; margin-bottom: 10px; }
+        .card h3 { font-size: 13px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Player */
+        .player { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 1px solid #282828; padding: 15px 20px; box-sizing: border-box; z-index: 2000; }
+        .p-inner { display: flex; align-items: center; justify-content: space-between; }
+        
+        .track-info { display: flex; align-items: center; gap: 12px; width: 30%; }
+        .track-info img { width: 45px; height: 45px; border-radius: 4px; }
+
         .controls { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .btns { display: flex; align-items: center; gap: 25px; }
-        .btns i { font-size: 18px; color: #b3b3b3; cursor: pointer; transition: 0.2s; }
-        .btns i:hover { color: #fff; }
+        .btns { display: flex; align-items: center; gap: 20px; }
+        .btns i { font-size: 18px; color: #b3b3b3; cursor: pointer; }
+        .play-main { font-size: 32px !important; color: #fff; }
         .btns i.active { color: var(--green); }
-        .play-main { font-size: 35px !important; color: #fff; }
-        .progress-box { width: 100%; max-width: 500px; display: flex; align-items: center; gap: 12px; font-size: 11px; color: #b3b3b3; }
+
+        .progress-box { width: 100%; max-width: 450px; display: flex; align-items: center; gap: 10px; font-size: 10px; color: #b3b3b3; }
         .bar-bg { flex: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
-        .bar-fill { height: 100%; background: var(--green); width: 0%; border-radius: 2px; transition: width 0.1s linear; }
-        .volume { width: 30%; display: flex; align-items: center; justify-content: flex-end; gap: 12px; min-width: 150px; }
-        input[type="range"] { accent-color: var(--green); cursor: pointer; }
-        @media (max-width: 768px) { .search-bar { display: none; } .volume { display: none; } .track-info { width: 60%; } }
+        .bar-fill { height: 100%; background: var(--green); width: 0%; border-radius: 2px; }
+
+        /* Volume & Mobile */
+        .volume-btn-zone { width: 30%; display: flex; justify-content: flex-end; }
+        .vol-trigger { font-size: 18px; color: #b3b3b3; cursor: pointer; padding: 10px; }
+        
+        /* Volume Popup (Spotify Style) */
+        .vol-popup { display: none; position: fixed; bottom: 100px; right: 20px; background: #282828; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 3000; flex-direction: column; align-items: center; gap: 15px; }
+        .vol-popup.active { display: flex; }
+        .vol-popup input[type="range"] { writing-mode: bt-lr; -webkit-appearance: none; width: 120px; height: 4px; background: #4f4f4f; border-radius: 2px; outline: none; }
+        .vol-popup input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: var(--green); border-radius: 50%; cursor: pointer; }
+
+        .footer-info { margin-top: 40px; text-align: center; color: #b3b3b3; font-size: 11px; padding: 20px; }
+        .kvkk-link { color: var(--green); text-decoration: none; margin-top: 5px; display: block; }
+
+        /* TELEFON AYARI */
+        @media (max-width: 768px) {
+            .track-info { display: none; } /* Mobilde şarkı bilgisi kapandı */
+            .volume-btn-zone { width: auto; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
+            .controls { width: 100%; }
+            .search-bar { display: none; }
+            .vol-popup { right: 50%; transform: translateX(50%); bottom: 120px; width: 80%; max-width: 250px; }
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
     <header class="header">
         <div class="brand"><img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png"><span>Credos <span style="color:var(--green)">Music</span></span></div>
         <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Ne dinlemek istersin?" oninput="searchMusic()"></div>
-        <div style="min-width: 100px; display: flex; justify-content: flex-end;"><div class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</div></div>
+        <div class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</div>
     </header>
 
     <div class="content">
         <div class="section-title" id="libTitle">Kitaplığın</div>
         <div class="grid" id="mainGrid"></div>
-
         <div class="footer-info">
             <p id="copyText">© 2025 - 2026 Credos Music. Tüm Hakları Saklıdır.</p>
             <p id="copyText">music.credos.qzz.io Reklamsız Premiumsuz Müzik Keyfi.</p>
@@ -65,12 +85,19 @@
         </div>
     </div>
 
+    <div class="vol-popup" id="volPopup">
+        <i class="fas fa-volume-up" style="color:var(--green)"></i>
+        <input type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
+        <span id="volVal">100%</span>
+    </div>
+
     <div class="player">
         <div class="p-inner">
             <div class="track-info">
                 <img id="pImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
-                <div><h4 id="pTitle" style="margin:0; font-size:14px;">Müzik Seçin</h4><p id="pSub" style="margin:4px 0 0; font-size:11px; color:#b3b3b3;">Credos Premium</p></div>
+                <div><h4 id="pTitle" style="margin:0; font-size:13px;">Müzik Seçin</h4><p style="margin:2px 0 0; font-size:10px; color:#b3b3b3;">Credos Premium</p></div>
             </div>
+
             <div class="controls">
                 <div class="btns">
                     <i class="fas fa-shuffle" id="shuffleBtn" onclick="toggleShuffle()"></i>
@@ -85,19 +112,16 @@
                     <span id="totT">0:00</span>
                 </div>
             </div>
-            <div class="volume"><i class="fas fa-volume-up"></i><input type="range" min="0" max="100" value="100" oninput="setVol(this.value)"></div>
+
+            <div class="volume-btn-zone">
+                <i class="fas fa-volume-up vol-trigger" onclick="toggleVolPopup()"></i>
+            </div>
         </div>
     </div>
+
     <audio id="audio"></audio>
 
     <script>
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || (e.ctrlKey && e.keyCode == 85)) {
-                return false;
-            }
-        };
-
         const songs = [
             {t: 'Nedenini Sorma', f: 'nedeninisorma.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/b12klnxm/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20120937.png'},
             {t: 'Dene', f: 'uzidene.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/eomujsdt/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20120525.png'},
@@ -133,42 +157,23 @@
         ];
 
         let curIdx = 0; let isShuffle = false; let isRepeat = false; let lang = 'TR'; const audio = document.getElementById('audio');
-        
-        const translations = { 
-            TR: { 
-                search: 'Ne dinlemek istersin?', 
-                lib: 'Kitaplığın', 
-                select: 'Müzik Seçin', 
-                copy: '© 2025 - 2026 Credos Music. Tüm Hakları Saklıdır.',
-                kvkk: 'KVKK Aydınlatma Metni ve Sözleşmesi'
-            }, 
-            EN: { 
-                search: 'What do you want to listen to?', 
-                lib: 'Your Library', 
-                select: 'Select Music',
-                copy: '© 2025 - 2026 Credos Music. All Rights Reserved.',
-                kvkk: 'KVKK Privacy Policy and Agreement'
-            } 
-        };
+
+        function toggleVolPopup() { document.getElementById('volPopup').classList.toggle('active'); }
+        function setVol(v) { audio.volume = v / 100; document.getElementById('volVal').innerText = v + "%"; }
 
         function toggleLang() {
             lang = lang === 'TR' ? 'EN' : 'TR';
             document.getElementById('langBtn').innerText = lang === 'TR' ? 'EN' : 'TR';
-            document.getElementById('searchInput').placeholder = translations[lang].search;
-            document.getElementById('libTitle').innerText = translations[lang].lib;
-            document.getElementById('copyText').innerText = translations[lang].copy;
-            document.getElementById('kvkkBtn').innerText = translations[lang].kvkk;
-            
-            if (document.getElementById('pTitle').innerText === translations['TR'].select || document.getElementById('pTitle').innerText === translations['EN'].select) {
-                document.getElementById('pTitle').innerText = translations[lang].select;
-            }
+            document.getElementById('searchInput').placeholder = lang === 'TR' ? 'Ne dinlemek istersin?' : 'What do you want to listen to?';
+            document.getElementById('libTitle').innerText = lang === 'TR' ? 'Kitaplığın' : 'Your Library';
+            document.getElementById('pTitle').innerText = lang === 'TR' ? 'Müzik Seçin' : 'Select Music';
         }
 
         function render(list) {
             const grid = document.getElementById('mainGrid'); grid.innerHTML = "";
             list.forEach((s) => {
                 const realIdx = songs.findIndex(x => x.t === s.t);
-                grid.innerHTML += `<div class="card" onclick="playS(${realIdx})"><img src="${s.i || 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png'}"><h3>${s.t}</h3></div>`;
+                grid.innerHTML += `<div class="card" onclick="playS(${realIdx})"><img src="${s.i}"><h3>${s.t}</h3></div>`;
             });
         }
 
@@ -179,24 +184,35 @@
             curIdx = i;
             audio.src = songs[curIdx].f;
             audio.play();
-            const songName = songs[curIdx].t;
-            const songImg = songs[curIdx].i || 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png';
-            document.getElementById('pTitle').innerText = songName;
-            document.getElementById('pImg').src = songImg;
+            document.getElementById('pTitle').innerText = songs[curIdx].t;
+            document.getElementById('pImg').src = songs[curIdx].i;
             document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-main";
-            // RPC Update kaldırıldı.
         }
 
         function toggle() { if(!audio.src) { playS(0); return; } audio.paused ? (audio.play(), document.getElementById('playBtn').className="fa-solid fa-circle-pause play-main") : (audio.pause(), document.getElementById('playBtn').className="fa-solid fa-circle-play play-main"); }
-        function next() { if (isRepeat) { playS(curIdx); return; } curIdx = isShuffle ? Math.floor(Math.random() * songs.length) : (curIdx + 1) % songs.length; playS(curIdx); }
+        function next() { curIdx = isShuffle ? Math.floor(Math.random() * songs.length) : (curIdx + 1) % songs.length; playS(curIdx); }
         function prev() { curIdx = (curIdx - 1 + songs.length) % songs.length; playS(curIdx); }
         function toggleShuffle() { isShuffle = !isShuffle; document.getElementById('shuffleBtn').classList.toggle('active', isShuffle); }
         function toggleRepeat() { isRepeat = !isRepeat; document.getElementById('repeatBtn').classList.toggle('active', isRepeat); }
-        audio.onended = () => next();
-        function setVol(v) { audio.volume = v / 100; }
+        
+        audio.onended = () => isRepeat ? audio.play() : next();
         function seek(e) { audio.currentTime = (e.offsetX / e.currentTarget.clientWidth) * audio.duration; }
-        audio.ontimeupdate = () => { if(audio.duration) { const p = (audio.currentTime / audio.duration) * 100; document.getElementById('fill').style.width = p + "%"; document.getElementById('curT').innerText = fmt(audio.currentTime); document.getElementById('totT').innerText = fmt(audio.duration); } };
+        audio.ontimeupdate = () => {
+            if(audio.duration) {
+                const p = (audio.currentTime / audio.duration) * 100;
+                document.getElementById('fill').style.width = p + "%";
+                document.getElementById('curT').innerText = fmt(audio.currentTime);
+                document.getElementById('totT').innerText = fmt(audio.duration);
+            }
+        };
         function fmt(s) { let m=Math.floor(s/60), r=Math.floor(s%60); return m+":"+(r<10?"0"+r:r); }
+        
+        // Popup dışında bir yere tıklanırsa kapat
+        window.onclick = function(event) {
+            if (!event.target.matches('.vol-trigger') && !event.target.closest('.vol-popup')) {
+                document.getElementById('volPopup').classList.remove('active');
+            }
+        }
     </script>
 </body>
 </html>
