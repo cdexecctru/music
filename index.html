@@ -30,34 +30,32 @@
         /* Player */
         .player { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 1px solid #282828; padding: 15px 20px; box-sizing: border-box; z-index: 2000; }
         .p-inner { display: flex; align-items: center; justify-content: space-between; }
-        
         .track-info { display: flex; align-items: center; gap: 12px; width: 30%; }
         .track-info img { width: 45px; height: 45px; border-radius: 4px; object-fit: cover; }
-
         .controls { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .btns { display: flex; align-items: center; gap: 20px; }
         .btns i { font-size: 18px; color: #b3b3b3; cursor: pointer; }
         .play-main { font-size: 32px !important; color: #fff; }
         .btns i.active { color: var(--green); }
-
         .progress-box { width: 100%; max-width: 450px; display: flex; align-items: center; gap: 10px; font-size: 10px; color: #b3b3b3; }
         .bar-bg { flex: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
         .bar-fill { height: 100%; background: var(--green); width: 0%; border-radius: 2px; }
+
+        /* Footer & Extra Links */
+        .footer-info { margin-top: 40px; text-align: center; color: #b3b3b3; font-size: 11px; padding: 20px; border-top: 1px solid #282828; }
+        .footer-links { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .footer-link { color: var(--green); text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .footer-link:hover { opacity: 0.8; }
 
         /* Volume & Pop-up */
         .volume-btn-zone { width: 30%; display: flex; justify-content: flex-end; align-items: center; gap: 15px; }
         .vol-trigger { font-size: 18px; color: #b3b3b3; cursor: pointer; }
         .pc-vol-slider { width: 100px; accent-color: var(--green); cursor: pointer; display: block; }
-
-        /* Mobil Pop-up */
         .vol-popup { display: none; position: fixed; bottom: 110px; right: 20px; background: #181818; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 3000; flex-direction: column; align-items: center; border: 1px solid #333; width: 220px; }
         .vol-popup.active { display: flex; }
         .pop-info { margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; width: 100%; text-align: center; display: none; }
         .pop-info img { width: 120px; height: 120px; border-radius: 8px; object-fit: cover; margin-bottom: 10px; }
         .pop-info h4 { font-size: 14px; margin: 0; color: #fff; }
-
-        .footer-info { margin-top: 40px; text-align: center; color: #b3b3b3; font-size: 11px; padding: 20px; border-top: 1px solid #282828; }
-        .kvkk-link { color: var(--green); text-decoration: none; margin-top: 5px; display: inline-block; }
 
         @media (max-width: 768px) {
             .track-info, .pc-vol-slider { display: none; }
@@ -80,10 +78,14 @@
     <div class="content">
         <div class="section-title" id="libTitle">Kitaplığın</div>
         <div class="grid" id="mainGrid"></div>
+        
         <div class="footer-info">
             <p id="copyText">© 2025 - 2026 Credos Music. Tüm Hakları Saklıdır.</p>
             <p id="promoText">music.credos.qzz.io Reklamsız Premiumsuz Müzik Keyfi.</p>
-            <a href="https://www.ktb.gov.tr/TR-323839/kvkk-aydinlatma-metni.html" target="_blank" class="kvkk-link" id="kvkkBtn">KVKK Aydınlatma Metni</a>
+            <div class="footer-links">
+                <a href="https://www.ktb.gov.tr/TR-323839/kvkk-aydinlatma-metni.html" target="_blank" class="footer-link" id="kvkkBtn">KVKK Aydınlatma Metni</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-kV8zY8DpLMKo0sONwGlFUHaUy82OkkgBPrbSRUuOx8_WIA/viewform?usp=publish-editor" target="_blank" class="footer-link" id="addMusicBtn"><i class="fas fa-plus-circle"></i> Müzik Ekleme Formu</a>
+            </div>
         </div>
     </div>
 
@@ -93,7 +95,6 @@
             <input type="range" min="0" max="100" value="100" oninput="setVol(this.value)" style="flex:1; accent-color: var(--green);">
         </div>
         <span id="volVal" style="font-size: 10px; margin-top: 5px;">100%</span>
-        
         <div class="pop-info">
             <img id="popImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
             <h4 id="popTitle">Müzik Seçin</h4>
@@ -107,7 +108,6 @@
                 <img id="pImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
                 <div><h4 id="pTitle" style="margin:0; font-size:13px;">Müzik Seçin</h4><p style="margin:2px 0 0; font-size:10px; color:#b3b3b3;">Credos Premium</p></div>
             </div>
-
             <div class="controls">
                 <div class="btns">
                     <i class="fas fa-shuffle" id="shuffleBtn" onclick="toggleShuffle()"></i>
@@ -122,7 +122,6 @@
                     <span id="totT">0:00</span>
                 </div>
             </div>
-
             <div class="volume-btn-zone">
                 <i class="fas fa-volume-up vol-trigger" onclick="toggleVolPopup()"></i>
                 <input type="range" class="pc-vol-slider" min="0" max="100" value="100" oninput="setVol(this.value)">
@@ -178,12 +177,11 @@
             document.getElementById('searchInput').placeholder = lang === 'TR' ? 'Ne dinlemek istersin?' : 'What do you want to listen to?';
             document.getElementById('libTitle').innerText = lang === 'TR' ? 'Kitaplığın' : 'Your Library';
             
-            // Footer & Copyright Düzenlemesi
             document.getElementById('copyText').innerText = lang === 'TR' ? '© 2025 - 2026 Credos Music. Tüm Hakları Saklıdır.' : '© 2025 - 2026 Credos Music. All Rights Reserved.';
             document.getElementById('promoText').innerText = lang === 'TR' ? 'music.credos.qzz.io Reklamsız Premiumsuz Müzik Keyfi.' : 'music.credos.qzz.io Ad-Free Premium-Free Music Enjoyment.';
             document.getElementById('kvkkBtn').innerText = lang === 'TR' ? 'KVKK Aydınlatma Metni' : 'KVKK Clarification Text';
+            document.getElementById('addMusicBtn').innerHTML = lang === 'TR' ? '<i class="fas fa-plus-circle"></i> Müzik Ekleme Formu' : '<i class="fas fa-plus-circle"></i> Add Music Form';
 
-            // Müzik seçilmediyse oynatıcı başlıklarını güncelle
             const defaultText = lang === 'TR' ? 'Müzik Seçin' : 'Select Music';
             const statusText = lang === 'TR' ? 'Şimdi Çalıyor' : 'Now Playing';
             
@@ -201,7 +199,6 @@
                 grid.innerHTML += `<div class="card" onclick="playS(${realIdx})"><img src="${s.i}"><h3>${s.t}</h3></div>`;
             });
         }
-
         function searchMusic() { const term = document.getElementById('searchInput').value.toLowerCase(); render(songs.filter(s => s.t.toLowerCase().includes(term))); }
         window.onload = () => render(songs);
 
