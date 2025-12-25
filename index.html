@@ -17,14 +17,13 @@
         .brand img { width: 35px; border-radius: 50%; border: 2px solid var(--green); }
         .search-bar { background: #242424; border-radius: 25px; padding: 10px 20px; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 12px; }
         .search-bar input { background: transparent; border: none; color: #fff; width: 100%; outline: none; }
-        .lang-toggle { background: #282828; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; }
+        .lang-toggle { background: #282828; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.3s; }
 
         /* Grid */
         .content { padding: 20px; }
         .section-title { font-size: 22px; margin-bottom: 20px; font-weight: 700; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
         .card { background: var(--card-bg); padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        .card:hover { background: #282828; }
         .card img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; margin-bottom: 10px; }
         .card h3 { font-size: 13px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -33,7 +32,7 @@
         .p-inner { display: flex; align-items: center; justify-content: space-between; }
         
         .track-info { display: flex; align-items: center; gap: 12px; width: 30%; }
-        .track-info img { width: 45px; height: 45px; border-radius: 4px; }
+        .track-info img { width: 45px; height: 45px; border-radius: 4px; object-fit: cover; }
 
         .controls { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .btns { display: flex; align-items: center; gap: 20px; }
@@ -45,30 +44,33 @@
         .bar-bg { flex: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
         .bar-fill { height: 100%; background: var(--green); width: 0%; border-radius: 2px; }
 
-        /* Volume & Mobile */
-        .volume-btn-zone { width: 30%; display: flex; justify-content: flex-end; }
-        .vol-trigger { font-size: 18px; color: #b3b3b3; cursor: pointer; padding: 10px; }
-        
-        /* Volume Popup (Spotify Style) */
-        .vol-popup { display: none; position: fixed; bottom: 100px; right: 20px; background: #282828; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 3000; flex-direction: column; align-items: center; gap: 15px; }
+        /* Volume & Pop-up */
+        .volume-btn-zone { width: 30%; display: flex; justify-content: flex-end; align-items: center; gap: 15px; }
+        .vol-trigger { font-size: 18px; color: #b3b3b3; cursor: pointer; }
+        .pc-vol-slider { width: 100px; accent-color: var(--green); cursor: pointer; display: block; }
+
+        /* Mobil Pop-up */
+        .vol-popup { display: none; position: fixed; bottom: 110px; right: 20px; background: #181818; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 3000; flex-direction: column; align-items: center; border: 1px solid #333; width: 220px; }
         .vol-popup.active { display: flex; }
-        .vol-popup input[type="range"] { writing-mode: bt-lr; -webkit-appearance: none; width: 120px; height: 4px; background: #4f4f4f; border-radius: 2px; outline: none; }
-        .vol-popup input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: var(--green); border-radius: 50%; cursor: pointer; }
+        .pop-info { margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; width: 100%; text-align: center; display: none; }
+        .pop-info img { width: 120px; height: 120px; border-radius: 8px; object-fit: cover; margin-bottom: 10px; }
+        .pop-info h4 { font-size: 14px; margin: 0; color: #fff; }
 
-        .footer-info { margin-top: 40px; text-align: center; color: #b3b3b3; font-size: 11px; padding: 20px; }
-        .kvkk-link { color: var(--green); text-decoration: none; margin-top: 5px; display: block; }
+        .footer-info { margin-top: 40px; text-align: center; color: #b3b3b3; font-size: 11px; padding: 20px; border-top: 1px solid #282828; }
+        .kvkk-link { color: var(--green); text-decoration: none; margin-top: 5px; display: inline-block; }
 
-        /* TELEFON AYARI */
         @media (max-width: 768px) {
-            .track-info { display: none; } /* Mobilde şarkı bilgisi kapandı */
-            .volume-btn-zone { width: auto; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
+            .track-info, .pc-vol-slider { display: none; }
+            .volume-btn-zone { width: auto; position: absolute; right: 15px; top: 50%; transform: translateY(-50%); }
             .controls { width: 100%; }
             .search-bar { display: none; }
-            .vol-popup { right: 50%; transform: translateX(50%); bottom: 120px; width: 80%; max-width: 250px; }
+            .vol-popup { right: 50%; transform: translateX(50%); width: 75%; }
+            .pop-info { display: block; }
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
+
     <header class="header">
         <div class="brand"><img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png"><span>Credos <span style="color:var(--green)">Music</span></span></div>
         <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Ne dinlemek istersin?" oninput="searchMusic()"></div>
@@ -80,15 +82,23 @@
         <div class="grid" id="mainGrid"></div>
         <div class="footer-info">
             <p id="copyText">© 2025 - 2026 Credos Music. Tüm Hakları Saklıdır.</p>
-            <p id="copyText">music.credos.qzz.io Reklamsız Premiumsuz Müzik Keyfi.</p>
-            <a href="https://www.ktb.gov.tr/TR-323839/kvkk-aydinlatma-metni.html" target="_blank" class="kvkk-link" id="kvkkBtn">KVKK Aydınlatma Metni ve Sözleşmesi</a>
+            <p id="promoText">music.credos.qzz.io Reklamsız Premiumsuz Müzik Keyfi.</p>
+            <a href="https://www.ktb.gov.tr/TR-323839/kvkk-aydinlatma-metni.html" target="_blank" class="kvkk-link" id="kvkkBtn">KVKK Aydınlatma Metni</a>
         </div>
     </div>
 
     <div class="vol-popup" id="volPopup">
-        <i class="fas fa-volume-up" style="color:var(--green)"></i>
-        <input type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
-        <span id="volVal">100%</span>
+        <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+            <i class="fas fa-volume-up" style="color:var(--green)"></i>
+            <input type="range" min="0" max="100" value="100" oninput="setVol(this.value)" style="flex:1; accent-color: var(--green);">
+        </div>
+        <span id="volVal" style="font-size: 10px; margin-top: 5px;">100%</span>
+        
+        <div class="pop-info">
+            <img id="popImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
+            <h4 id="popTitle">Müzik Seçin</h4>
+            <p id="popStatus" style="font-size: 10px; color: var(--green); margin: 5px 0 0;">Şimdi Çalıyor</p>
+        </div>
     </div>
 
     <div class="player">
@@ -115,6 +125,7 @@
 
             <div class="volume-btn-zone">
                 <i class="fas fa-volume-up vol-trigger" onclick="toggleVolPopup()"></i>
+                <input type="range" class="pc-vol-slider" min="0" max="100" value="100" oninput="setVol(this.value)">
             </div>
         </div>
     </div>
@@ -158,15 +169,29 @@
 
         let curIdx = 0; let isShuffle = false; let isRepeat = false; let lang = 'TR'; const audio = document.getElementById('audio');
 
-        function toggleVolPopup() { document.getElementById('volPopup').classList.toggle('active'); }
-        function setVol(v) { audio.volume = v / 100; document.getElementById('volVal').innerText = v + "%"; }
+        function toggleVolPopup() { if(window.innerWidth <= 768) document.getElementById('volPopup').classList.toggle('active'); }
+        function setVol(v) { audio.volume = v / 100; document.getElementById('volVal').innerText = v + "%"; document.querySelectorAll('input[type="range"]').forEach(el => el.value = v); }
 
         function toggleLang() {
             lang = lang === 'TR' ? 'EN' : 'TR';
             document.getElementById('langBtn').innerText = lang === 'TR' ? 'EN' : 'TR';
             document.getElementById('searchInput').placeholder = lang === 'TR' ? 'Ne dinlemek istersin?' : 'What do you want to listen to?';
             document.getElementById('libTitle').innerText = lang === 'TR' ? 'Kitaplığın' : 'Your Library';
-            document.getElementById('pTitle').innerText = lang === 'TR' ? 'Müzik Seçin' : 'Select Music';
+            
+            // Footer & Copyright Düzenlemesi
+            document.getElementById('copyText').innerText = lang === 'TR' ? '© 2025 - 2026 Credos Music. Tüm Hakları Saklıdır.' : '© 2025 - 2026 Credos Music. All Rights Reserved.';
+            document.getElementById('promoText').innerText = lang === 'TR' ? 'music.credos.qzz.io Reklamsız Premiumsuz Müzik Keyfi.' : 'music.credos.qzz.io Ad-Free Premium-Free Music Enjoyment.';
+            document.getElementById('kvkkBtn').innerText = lang === 'TR' ? 'KVKK Aydınlatma Metni' : 'KVKK Clarification Text';
+
+            // Müzik seçilmediyse oynatıcı başlıklarını güncelle
+            const defaultText = lang === 'TR' ? 'Müzik Seçin' : 'Select Music';
+            const statusText = lang === 'TR' ? 'Şimdi Çalıyor' : 'Now Playing';
+            
+            if(!audio.src || audio.src === "" || audio.src.includes(window.location.hostname) === false) {
+                document.getElementById('pTitle').innerText = defaultText;
+                document.getElementById('popTitle').innerText = defaultText;
+            }
+            document.getElementById('popStatus').innerText = statusText;
         }
 
         function render(list) {
@@ -186,6 +211,8 @@
             audio.play();
             document.getElementById('pTitle').innerText = songs[curIdx].t;
             document.getElementById('pImg').src = songs[curIdx].i;
+            document.getElementById('popTitle').innerText = songs[curIdx].t;
+            document.getElementById('popImg').src = songs[curIdx].i;
             document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-main";
         }
 
@@ -207,7 +234,6 @@
         };
         function fmt(s) { let m=Math.floor(s/60), r=Math.floor(s%60); return m+":"+(r<10?"0"+r:r); }
         
-        // Popup dışında bir yere tıklanırsa kapat
         window.onclick = function(event) {
             if (!event.target.matches('.vol-trigger') && !event.target.closest('.vol-popup')) {
                 document.getElementById('volPopup').classList.remove('active');
