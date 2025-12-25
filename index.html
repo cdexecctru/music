@@ -7,6 +7,8 @@
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <style>
         :root { --green: #1DB954; --bg: #000; --card-bg: #121212; }
         body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 160px; overflow-x: hidden; }
@@ -17,13 +19,26 @@
         .brand img { width: 35px; border-radius: 50%; border: 2px solid var(--green); }
         .search-bar { background: #242424; border-radius: 25px; padding: 10px 20px; width: 100%; max-width: 400px; display: flex; align-items: center; gap: 12px; }
         .search-bar input { background: transparent; border: none; color: #fff; width: 100%; outline: none; }
-        .lang-toggle { background: #282828; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.3s; }
+        .lang-toggle { background: #282828; color: #fff; border: 1px solid #444; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.3s; margin-right: 10px;}
 
-        /* Grid */
+        /* Auth Buttons & Profile */
+        .auth-group { display: flex; gap: 10px; align-items: center; }
+        .btn-auth { background: none; color: #b3b3b3; border: none; font-weight: 700; cursor: pointer; font-size: 13px; }
+        .btn-auth.login { background: #fff; color: #000; padding: 8px 18px; border-radius: 20px; }
+        .user-profile { position: relative; cursor: pointer; }
+        .profile-img { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--green); object-fit: cover; }
+        .profile-popup { display: none; position: absolute; top: 45px; right: 0; background: #282828; min-width: 170px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 5000; overflow: hidden; border: 1px solid #333; }
+        .profile-popup.active { display: block; }
+        .popup-item { padding: 12px 20px; font-size: 13px; color: #fff; transition: 0.2s; border-bottom: 1px solid #333; }
+        .popup-item:hover { background: #333; color: var(--green); }
+        .popup-item:last-child { border: none; }
+
+        /* Grid & Cards */
         .content { padding: 20px; }
         .section-title { font-size: 22px; margin-bottom: 20px; font-weight: 700; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
         .card { background: var(--card-bg); padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .card:hover { background: #282828; transform: translateY(-5px); }
         .card img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; margin-bottom: 10px; }
         .card h3 { font-size: 13px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -41,29 +56,17 @@
         .bar-bg { flex: 1; height: 4px; background: #4f4f4f; border-radius: 2px; cursor: pointer; position: relative; }
         .bar-fill { height: 100%; background: var(--green); width: 0%; border-radius: 2px; }
 
-        /* Footer & Extra Links */
-        .footer-info { margin-top: 40px; text-align: center; color: #b3b3b3; font-size: 11px; padding: 20px; border-top: 1px solid #282828; }
-        .footer-links { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; align-items: center; }
-        .footer-link { color: var(--green); text-decoration: none; font-weight: 600; transition: 0.3s; }
-        .footer-link:hover { opacity: 0.8; }
-
         /* Volume & Pop-up */
         .volume-btn-zone { width: 30%; display: flex; justify-content: flex-end; align-items: center; gap: 15px; }
         .vol-trigger { font-size: 18px; color: #b3b3b3; cursor: pointer; }
-        .pc-vol-slider { width: 100px; accent-color: var(--green); cursor: pointer; display: block; }
-        .vol-popup { display: none; position: fixed; bottom: 110px; right: 20px; background: #181818; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 3000; flex-direction: column; align-items: center; border: 1px solid #333; width: 220px; }
+        .pc-vol-slider { width: 100px; accent-color: var(--green); cursor: pointer; }
+        .vol-popup { display: none; position: fixed; bottom: 110px; right: 20px; background: #181818; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 3000; flex-direction: column; border: 1px solid #333; width: 220px; }
         .vol-popup.active { display: flex; }
-        .pop-info { margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; width: 100%; text-align: center; display: none; }
-        .pop-info img { width: 120px; height: 120px; border-radius: 8px; object-fit: cover; margin-bottom: 10px; }
-        .pop-info h4 { font-size: 14px; margin: 0; color: #fff; }
 
         @media (max-width: 768px) {
             .track-info, .pc-vol-slider { display: none; }
             .volume-btn-zone { width: auto; position: absolute; right: 15px; top: 50%; transform: translateY(-50%); }
-            .controls { width: 100%; }
             .search-bar { display: none; }
-            .vol-popup { right: 50%; transform: translateX(50%); width: 75%; }
-            .pop-info { display: block; }
         }
     </style>
 </head>
@@ -72,33 +75,20 @@
     <header class="header">
         <div class="brand"><img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png"><span>Credos <span style="color:var(--green)">Music</span></span></div>
         <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Ne dinlemek istersin?" oninput="searchMusic()"></div>
-        <div class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</div>
+        <div style="display: flex; align-items: center;">
+            <div class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</div>
+            <div id="authZone"></div>
+        </div>
     </header>
 
     <div class="content">
         <div class="section-title" id="libTitle">Kitaplığın</div>
         <div class="grid" id="mainGrid"></div>
         
-        <div class="footer-info">
+        <div style="text-align: center; color: #b3b3b3; font-size: 11px; margin-top: 50px; padding: 20px; border-top: 1px solid #282828;">
             <p id="copyText">© 2025 - 2026 Credos Music. Tüm Hakları Saklıdır.</p>
             <p id="promoText">music.credos.qzz.io Reklamsız Premiumsuz Müzik Keyfi.</p>
-            <div class="footer-links">
-                <a href="https://www.ktb.gov.tr/TR-323839/kvkk-aydinlatma-metni.html" target="_blank" class="footer-link" id="kvkkBtn">KVKK Aydınlatma Metni</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-kV8zY8DpLMKo0sONwGlFUHaUy82OkkgBPrbSRUuOx8_WIA/viewform?usp=publish-editor" target="_blank" class="footer-link" id="addMusicBtn"><i class="fas fa-plus-circle"></i> Müzik Ekleme Formu</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="vol-popup" id="volPopup">
-        <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
-            <i class="fas fa-volume-up" style="color:var(--green)"></i>
-            <input type="range" min="0" max="100" value="100" oninput="setVol(this.value)" style="flex:1; accent-color: var(--green);">
-        </div>
-        <span id="volVal" style="font-size: 10px; margin-top: 5px;">100%</span>
-        <div class="pop-info">
-            <img id="popImg" src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
-            <h4 id="popTitle">Müzik Seçin</h4>
-            <p id="popStatus" style="font-size: 10px; color: var(--green); margin: 5px 0 0;">Şimdi Çalıyor</p>
+            <a href="https://www.ktb.gov.tr/TR-323839/kvkk-aydinlatma-metni.html" target="_blank" style="color:var(--green); text-decoration:none;" id="kvkkBtn">KVKK Aydınlatma Metni</a>
         </div>
     </div>
 
@@ -132,6 +122,15 @@
     <audio id="audio"></audio>
 
     <script>
+        const CONST_GAS_URL = "https://script.google.com/macros/s/AKfycbx5nwWNZ_e5KZlZ57mbnrDAn6Ckvxei34e_ShIM5QupPzk5gU2JkmS8dBEdl5dHY6E7ng/exec";
+        let currentUser = null;
+        let lang = 'TR';
+        
+        const authTrans = {
+            TR: { login: "Oturum Aç", signup: "Kayıt Ol", playlist: "Çalma Listem", logout: "Çıkış Yap" },
+            EN: { login: "Log In", signup: "Sign Up", playlist: "My Playlist", logout: "Log Out" }
+        };
+
         const songs = [
             {t: 'ALÆCARTE-X', f: 'alacarte.mp4', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png'},
             {t: 'Nedenini Sorma', f: 'nedeninisorma.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/b12klnxm/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-21%20120937.png'},
@@ -167,30 +166,53 @@
             {t: 'Montagem Tomada', f: 'MONTAGEM TOMADA.mp3', i: 'https://raw.githubusercontent.com/cdexecctru/fileupld/main/1qbqlz3n/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-12-20%20224338.png'}
         ];
 
-        let curIdx = 0; let isShuffle = false; let isRepeat = false; let lang = 'TR'; const audio = document.getElementById('audio');
+        let curIdx = 0; let isShuffle = false; let isRepeat = false; const audio = document.getElementById('audio');
 
-        function toggleVolPopup() { if(window.innerWidth <= 768) document.getElementById('volPopup').classList.toggle('active'); }
-        function setVol(v) { audio.volume = v / 100; document.getElementById('volVal').innerText = v + "%"; document.querySelectorAll('input[type="range"]').forEach(el => el.value = v); }
+        async function initApp() {
+            try {
+                const res = await fetch(CONST_GAS_URL);
+                const config = await res.json();
+                firebase.initializeApp(config);
+                firebase.auth().onAuthStateChanged(user => {
+                    currentUser = user;
+                    updateAuthUI();
+                });
+            } catch (e) { console.error("Auth Fail"); }
+            render(songs);
+        }
+
+        function updateAuthUI() {
+            const zone = document.getElementById('authZone');
+            const t = authTrans[lang];
+            if (currentUser) {
+                zone.innerHTML = `
+                    <div class="user-profile" onclick="togglePop(event)">
+                        <img src="${currentUser.photoURL || 'https://www.w3schools.com/howto/img_avatar.png'}" class="profile-img">
+                        <div class="profile-popup" id="pPop">
+                            <div class="popup-item" onclick="alert('${t.playlist}')">${t.playlist}</div>
+                            <div class="popup-item" onclick="firebase.auth().signOut().then(()=>location.reload())">${t.logout}</div>
+                        </div>
+                    </div>`;
+            } else {
+                zone.innerHTML = `
+                    <div class="auth-group">
+                        <button class="btn-auth" onclick="location.href='register.html'">${t.signup}</button>
+                        <button class="btn-auth login" onclick="location.href='login.html'">${t.login}</button>
+                    </div>`;
+            }
+        }
+
+        function togglePop(e) { e.stopPropagation(); document.getElementById('pPop').classList.toggle('active'); }
+        window.onclick = () => { if(document.getElementById('pPop')) document.getElementById('pPop').classList.remove('active'); };
 
         function toggleLang() {
             lang = lang === 'TR' ? 'EN' : 'TR';
             document.getElementById('langBtn').innerText = lang === 'TR' ? 'EN' : 'TR';
             document.getElementById('searchInput').placeholder = lang === 'TR' ? 'Ne dinlemek istersin?' : 'What do you want to listen to?';
             document.getElementById('libTitle').innerText = lang === 'TR' ? 'Kitaplığın' : 'Your Library';
-            
             document.getElementById('copyText').innerText = lang === 'TR' ? '© 2025 - 2026 Credos Music. Tüm Hakları Saklıdır.' : '© 2025 - 2026 Credos Music. All Rights Reserved.';
-            document.getElementById('promoText').innerText = lang === 'TR' ? 'music.credos.qzz.io Reklamsız Premiumsuz Müzik Keyfi.' : 'music.credos.qzz.io Ad-Free Premium-Free Music Enjoyment.';
             document.getElementById('kvkkBtn').innerText = lang === 'TR' ? 'KVKK Aydınlatma Metni' : 'KVKK Clarification Text';
-            document.getElementById('addMusicBtn').innerHTML = lang === 'TR' ? '<i class="fas fa-plus-circle"></i> Müzik Ekleme Formu' : '<i class="fas fa-plus-circle"></i> Add Music Form';
-
-            const defaultText = lang === 'TR' ? 'Müzik Seçin' : 'Select Music';
-            const statusText = lang === 'TR' ? 'Şimdi Çalıyor' : 'Now Playing';
-            
-            if(!audio.src || audio.src === "" || audio.src.includes(window.location.hostname) === false) {
-                document.getElementById('pTitle').innerText = defaultText;
-                document.getElementById('popTitle').innerText = defaultText;
-            }
-            document.getElementById('popStatus').innerText = statusText;
+            updateAuthUI();
         }
 
         function render(list) {
@@ -200,17 +222,13 @@
                 grid.innerHTML += `<div class="card" onclick="playS(${realIdx})"><img src="${s.i}"><h3>${s.t}</h3></div>`;
             });
         }
+
         function searchMusic() { const term = document.getElementById('searchInput').value.toLowerCase(); render(songs.filter(s => s.t.toLowerCase().includes(term))); }
-        window.onload = () => render(songs);
 
         function playS(i) {
-            curIdx = i;
-            audio.src = songs[curIdx].f;
-            audio.play();
+            curIdx = i; audio.src = songs[curIdx].f; audio.play();
             document.getElementById('pTitle').innerText = songs[curIdx].t;
             document.getElementById('pImg').src = songs[curIdx].i;
-            document.getElementById('popTitle').innerText = songs[curIdx].t;
-            document.getElementById('popImg').src = songs[curIdx].i;
             document.getElementById('playBtn').className = "fa-solid fa-circle-pause play-main";
         }
 
@@ -219,9 +237,10 @@
         function prev() { curIdx = (curIdx - 1 + songs.length) % songs.length; playS(curIdx); }
         function toggleShuffle() { isShuffle = !isShuffle; document.getElementById('shuffleBtn').classList.toggle('active', isShuffle); }
         function toggleRepeat() { isRepeat = !isRepeat; document.getElementById('repeatBtn').classList.toggle('active', isRepeat); }
-        
-        audio.onended = () => isRepeat ? audio.play() : next();
+        function setVol(v) { audio.volume = v / 100; }
+        function toggleVolPopup() { document.getElementById('volPopup').classList.toggle('active'); }
         function seek(e) { audio.currentTime = (e.offsetX / e.currentTarget.clientWidth) * audio.duration; }
+        
         audio.ontimeupdate = () => {
             if(audio.duration) {
                 const p = (audio.currentTime / audio.duration) * 100;
@@ -231,13 +250,9 @@
             }
         };
         function fmt(s) { let m=Math.floor(s/60), r=Math.floor(s%60); return m+":"+(r<10?"0"+r:r); }
-        
-        window.onclick = function(event) {
-            if (!event.target.matches('.vol-trigger') && !event.target.closest('.vol-popup')) {
-                document.getElementById('volPopup').classList.remove('active');
-            }
-        }
+        audio.onended = () => isRepeat ? audio.play() : next();
+
+        initApp();
     </script>
 </body>
-
 </html>
