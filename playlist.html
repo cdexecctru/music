@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Favorilerim | Credos Music</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <style>
+        :root { --green: #1DB954; --bg: #121212; }
+        body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; }
+        .hero { height: 30vh; background: linear-gradient(var(--green), #121212); display: flex; align-items: flex-end; padding: 30px; gap: 30px; }
+        .hero img { width: 190px; height: 190px; box-shadow: 0 4px 60px rgba(0,0,0,0.5); }
+        .hero h1 { font-size: 72px; margin: 0; }
+        .song-list { padding: 30px; }
+        .song-item { display: grid; grid-template-columns: 50px 1fr 100px; padding: 10px; border-radius: 5px; align-items: center; cursor: pointer; border-bottom: 1px solid #282828; }
+        .song-item:hover { background: rgba(255,255,255,0.1); }
+        .btn-home { color: #fff; text-decoration: none; font-weight: 700; margin-bottom: 20px; display: inline-block; }
+        .remove-btn { color: #b3b3b3; background: none; border: none; cursor: pointer; }
+        .remove-btn:hover { color: #ff4d4d; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <img src="https://raw.githubusercontent.com/cdexecctru/fileupld/main/p0iuu8ex/credos_music_logo.png">
+        <div>
+            <p style="font-size:12px; font-weight:700;">ÇALMA LİSTESİ</p>
+            <h1>Favorilerim</h1>
+            <p id="stats" style="color:#b3b3b3; font-size:14px;"></p>
+        </div>
+    </div>
+
+    <div class="song-list">
+        <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> Geri Dön</a>
+        <div id="list"></div>
+    </div>
+
+    <script>
+        const CONST_GAS_URL = "https://script.google.com/macros/s/AKfycbx5nwWNZ_e5KZlZ57mbnrDAn6Ckvxei34e_ShIM5QupPzk5gU2JkmS8dBEdl5dHY6E7ng/exec";
+        
+        async function init() {
+            const res = await fetch(CONST_GAS_URL);
+            const config = await res.json();
+            firebase.initializeApp(config);
+            
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) { render(user.uid); }
+                else { location.href = 'index.html'; }
+            });
+        }
+
+        function render(uid) {
+            const list = JSON.parse(localStorage.getItem('playlist_' + uid)) || [];
+            const container = document.getElementById('list');
+            document.getElementById('stats').innerText = `${list.length} Şarkı`;
+            container.innerHTML = list.map((s, i) => `
+                <div class="song-item">
+                    <span style="color:#b3b3b3;">${i+1}</span>
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <img src="${s.i}" width="40" height="40" style="border-radius:3px;">
+                        <span>${s.t}</span>
+                    </div>
+                    <button class="remove-btn" onclick="removeS('${uid}', ${i})"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function removeS(uid, i) {
+            let list = JSON.parse(localStorage.getItem('playlist_' + uid));
+            list.splice(i, 1);
+            localStorage.setItem('playlist_' + uid, JSON.stringify(list));
+            render(uid);
+        }
+
+        init();
+    </script>
+</body>
+</html>
