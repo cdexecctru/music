@@ -12,7 +12,8 @@
     <script src="script.js"></script>
     <style>
         :root { --green: #1DB954; --bg: #000; --card-bg: #121212; }
-        body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 160px; overflow-x: hidden; }
+        /* Player + Iframe için alt boşluğu artırdım */
+        body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding-bottom: 450px; overflow-x: hidden; }
         
         .header { height: 75px; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #282828; }
         .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; cursor: pointer; }
@@ -36,7 +37,6 @@
         .popup-item:hover { background: #333; color: var(--green); }
         .popup-item:last-child { border: none; }
 
-        /* Song Add Button (Green Circle, Black Plus) */
         .add-to-playlist { width: 26px; height: 26px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; transition: 0.2s; margin-left: 15px; }
         .add-to-playlist:hover { transform: scale(1.1); }
         .add-to-playlist i { color: #000; font-size: 14px; }
@@ -48,6 +48,12 @@
         .card:hover { background: #282828; transform: translateY(-5px); }
         .card img { width: 100%; aspect-ratio: 1/1; border-radius: 6px; object-fit: cover; margin-bottom: 10px; }
         .card h3 { font-size: 13px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* IFRAME FOOTER STİLLERİ */
+        .site-footer { margin-top: 50px; padding: 20px; text-align: center; background: #000; border-top: 1px solid #282828; }
+        .iframe-container { width: 100%; max-width: 1000px; margin: 0 auto 30px auto; border-radius: 12px; overflow: hidden; background: #121212; border: 1px solid #333; }
+        .iframe-container iframe { width: 100%; height: 250px; border: none; display: block; }
+        .footer-copyright { color: #b3b3b3; font-size: 12px; padding-bottom: 20px; }
 
         /* Player Footer */
         .player { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 1px solid #282828; padding: 15px 20px; box-sizing: border-box; z-index: 2000; }
@@ -82,6 +88,15 @@
     <div class="content">
         <div class="section-title" id="libTitle">Kitaplığın</div>
         <div class="grid" id="mainGrid"></div>
+
+        <footer class="site-footer">
+            <div class="iframe-container">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc-kV8zY8DpLMKo0sONwGlFUHaUy82OkkgBPrbSRUuOx8_WIA/viewform?embedded=true" width="400" height="250" frameborder="0" marginheight="0" marginwidth="0">Yükleniyor…</iframe></iframe>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2025 music.credos.qzz.io | Premiumsuz Müzik Keyfi
+            </div>
+        </footer>
     </div>
 
     <div class="player">
@@ -120,6 +135,7 @@
     <audio id="audio"></audio>
 
     <script>
+        // JS fonksiyonlarını aynı bıraktım, dokunmadım.
         const CONST_GAS_URL = "https://script.google.com/macros/s/AKfycbx5nwWNZ_e5KZlZ57mbnrDAn6Ckvxei34e_ShIM5QupPzk5gU2JkmS8dBEdl5dHY6E7ng/exec";
         let currentUser = null; let lang = 'TR'; let curIdx = 0; let isShuffle = false; let isRepeat = false;
         
